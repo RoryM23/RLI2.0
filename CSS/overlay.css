@@ -9,7 +9,7 @@
 .rlis-overlay-tourney-area {
   flex: 0 0 auto;
   width: 100%;
-  height: 50px;
+  height: 30px;
   display: flex;
   align-items: flex-start;
   border-color: rgba(120, 120, 120, 0.4);
@@ -18,7 +18,7 @@
 }
 .rlis-overlay-tourney-top {
   width: 100%;
-  height: 50px;
+  height: 100%;
   display: flex;
   align-items: center;
   border-color: rgba(120, 120, 120, 0.4);
@@ -49,11 +49,11 @@
   flex-direction: row;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.76);
-  clip-path: polygon(2.5% 0, 97.5% 0, 100% 100%, 0% 100%)
+  clip-path: polygon(2% 0, 98% 0, 100% 100%, 0% 100%)
 }
 .rlis-overlay-tourney-text {
   color: rgb(255, 255, 255);
-  font-size: 30px;
+  font-size: 25px;
   font-style: italic;
   font-family: Quantico;
   font-weight: 700;
@@ -71,7 +71,7 @@
 }
 .rlis-overlay-overlay-top {
   width: 100%;
-  height: 125px;
+  height: 105px;
   display: flex;
   align-items: center;
   border-color: rgba(120, 120, 120, 0.4);
@@ -117,6 +117,7 @@
   flex-direction: column;
   justify-content: flex-end;
   background: linear-gradient(to right, #003576, #007ad8);
+  clip-path: polygon(0 0, 95% 0, 100% 100%, 0% 100%);
 }
 .rlis-overlay-blue-name-text1 {
   color: rgb(255, 255, 255);
@@ -162,6 +163,7 @@
   flex-direction: column;
   justify-content: flex-end;
   background: linear-gradient(to right, #003576, #007ad8);
+  clip-path: polygon(0 0, 95% 0, 100% 100%, 0% 100%);
 }
 .rlis-overlay-blue-name-text2 {
   color: rgb(255, 255, 255);
@@ -207,6 +209,7 @@
   flex-direction: column;
   justify-content: flex-end;
   background: linear-gradient(to right, #003576, #007ad8);
+  clip-path: polygon(0 0, 95% 0, 100% 100%, 0% 100%);
 }
 .rlis-overlay-blue-name-text3 {
   color: rgb(255, 255, 255);
@@ -608,7 +611,7 @@
 }
 .rlis-overlay-scoreboard-bottom {
   width: 100%;
-  height: 50px;
+  height: 30px;
   display: flex;
   align-items: center;
   border-color: rgba(120, 120, 120, 0.4);
@@ -655,7 +658,7 @@
 }
 .rlis-overlay-info-left-text {
   color: rgb(255, 255, 255);
-  font-size: 30px;
+  font-size: 25px;
   font-style: italic;
   font-family: Quantico;
   font-weight: 700;
@@ -671,7 +674,7 @@
 }
 .rlis-overlay-stage-text {
   color: rgb(255, 255, 255);
-  font-size: 30px;
+  font-size: 25px;
   font-style: italic;
   font-family: Quantico;
   font-weight: 700;
@@ -690,7 +693,7 @@
 }
 .rlis-overlay-info-right-text {
   color: rgb(255, 255, 255);
-  font-size: 30px;
+  font-size: 25px;
   font-style: italic;
   font-family: Quantico;
   font-weight: 700;
@@ -742,6 +745,7 @@
   flex-direction: column;
   justify-content: flex-end;
   background: linear-gradient(to left, #ae5600, #f77400);
+  clip-path: polygon(5% 0, 100% 0, 100% 100%, 0% 100%);
 }
 .rlis-overlay-orange-name-text1 {
   color: rgb(255, 255, 255);
@@ -787,6 +791,7 @@
   flex-direction: column;
   justify-content: flex-end;
   background: linear-gradient(to left, #ae5600, #f77400);
+  clip-path: polygon(5% 0, 100% 0, 100% 100%, 0% 100%);
 }
 .rlis-overlay-oranege-name-text2 {
   color: rgb(255, 255, 255);
@@ -832,6 +837,7 @@
   flex-direction: column;
   justify-content: flex-end;
   background: linear-gradient(to left, #ae5600, #f77400);
+  clip-path: polygon(5% 0, 100% 0, 100% 100%, 0% 100%);
 }
 .rlis-overlay-orange-name-text3 {
   color: rgb(255, 255, 255);
@@ -858,7 +864,7 @@
 .rlis-overlay-overlay-middle {
   width: 100%;
   border: 2px dashed rgba(120, 120, 120, 0.4);
-  height: 710px;
+  height: 750px;
   display: flex;
   font-size: 20px;
   align-items: center;
@@ -890,6 +896,8 @@
   border-width: 0px;
   justify-content: flex-start;
   background: linear-gradient(to right, #003576, #007ad8);
+  clip-path: polygon(0 0, 99% 0, 100% 100%, 0 100%);
+
 }
 .rlis-overlay-name-area {
   flex: 0 0 auto;
@@ -902,7 +910,6 @@
   border-width: 0px;
   flex-direction: column;
   justify-content: center;
-  background-color: #003576;
 }
 .rlis-overlay-name-text {
   color: rgb(255, 255, 255);
@@ -928,6 +935,7 @@
   font-style: italic;
   font-family: Quantico;
   font-weight: 700;
+  padding-right: 2px;
 }
 .rlis-overlay-score-amount {
   color: rgb(255, 255, 255);
@@ -952,6 +960,7 @@
   font-style: italic;
   font-family: Quantico;
   font-weight: 700;
+  padding-right: 2px;
 }
 .rlis-overlay-goals-amount {
   color: rgb(255, 255, 255);
@@ -976,6 +985,7 @@
   font-style: italic;
   font-family: Quantico;
   font-weight: 700;
+  padding-right: 2px;
 }
 .rlis-overlay-assists-amount {
   color: rgb(255, 255, 255);
@@ -1000,6 +1010,7 @@
   font-style: italic;
   font-family: Quantico;
   font-weight: 700;
+  padding-right: 2px;
 }
 .rlis-overlay-shots-amount {
   color: rgb(255, 255, 255);
@@ -1024,6 +1035,7 @@
   font-style: italic;
   font-family: Quantico;
   font-weight: 700;
+  padding-right: 2px;
 }
 .rlis-overlay-saves-amount {
   color: rgb(255, 255, 255);
