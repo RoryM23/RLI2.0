@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Quantico:ital,wght@1,700&display=swap');
+  </style>
+</head>
+<div>
+  <link href="CSS/overlay.css" rel="stylesheet" />
+  <div class="rlis-overlay-container">
+    <div class="rlis-overlay-tourney-area">
+      <div class="rlis-overlay-tourney-top">
+        <div class="rlis-overlay-left-spacer"></div>
+        <div class="rlis-overlay-tourney-info-area">
+          <span class="rlis-overlay-tourney-text">
+            <span>RLIS Season 9</span>
+            <br />
+          </span>
+        </div>
+        <div class="rlis-overlay-right-spacer"></div>
+      </div>
+    </div>
+    <div class="rlis-overlay-overlay-top">
+      <div class="rlis-overlay-top-left-spacer">
+        <div class="rlis-overlay-blue-names">
+          <div class="rlis-overlay-blame-name-area1">
+            <span class="rlis-overlay-blue-name-text1">Player Name</span>
+            <div class="rlis-overlay-blue-boost1"></div>
+          </div>
+          <div class="rlis-overlay-blue-gap1"></div>
+          <div class="rlis-overlay-blue-name-area2">
+            <span class="rlis-overlay-blue-name-text2">Player Name</span>
+            <div class="rlis-overlay-blue-boost2"></div>
+          </div>
+          <div class="rlis-overlay-blue-gap2"></div>
+          <div class="rlis-overlay-blue-name-area3">
+            <span class="rlis-overlay-blue-name-text3">Player Name</span>
+            <div class="rlis-overlay-blue-boost3"></div>
+          </div>
+        </div>
+      </div>
+      <div class="rlis-overlay-scoreboard">
+        <div class="rlis-overlay-scoreboard-top">
+          <div class="rlis-overlay-full-score-area">
+            <div class="rlis-overlay-blue-scoreboard-area">
+              <div class="rlis-overlay-blue-spacer"></div>
+              <div class="rlis-overlay-blue-logo-area">
+                <img src="Images/rli_logo.png" style="height:75px; width:auto;" id="blueImg"/>
+              </div>
+              <div class="rlis-overlay-blue-team-info-area">
+                <div class="rlis-overlay-blue-team-name-area">
+                  <span class="rlis-overlay-blue-team-name">
+                    <span>Team Name</span>
+                    <br />
+                  </span>
+                </div>
+                <div class="rlis-overlay-blue-series-score">
+                  <span class="rlis-overlay-blue-g1">__</span>
+                  <span class="rlis-overlay-blue-g2">__</span>
+                  <span class="rlis-overlay-blue-g3">__</span>
+                  <span class="rlis-overlay-blue-g4">__</span>
+                  <span class="rlis-overlay-blue-g5">__</span>
+                </div>
+              </div>
+              <div class="rlis-overlay-blue-score-area">
+                <span class="rlis-overlay-blue-score">0</span>
+              </div>
+            </div>
+            <div class="rlis-overlay-timer-area">
+              <span class="rlis-overlay-timer">5:00</span>
+            </div>
+            <div class="rlis-overlay-orange-scoreboard-area">
+              <div class="rlis-overlay-orange-score-area">
+                <span class="rlis-overlay-orange-score">0</span>
+              </div>
+              <div class="rlis-overlay-orange-team-info-area">
+                <div class="rlis-overlay-orange-team-name-area">
+                  <span class="rlis-overlay-orange-team-name">
+                    <span>Team Name</span>
+                    <br />
+                  </span>
+                </div>
+                <div class="rlis-overlay-orange-series-score">
+                  <span class="rlis-overlay-orange-g1">__</span>
+                  <span class="rlis-overlay-orange-g2">__</span>
+                  <span class="rlis-overlay-orange-g3">__</span>
+                  <span class="rlis-overlay-orange-g4">__</span>
+                  <span class="rlis-overlay-orange-g5">__</span>
+                </div>
+              </div>
+              <div class="rlis-overlay-orange-logo-area">
+                <img src="Images/rli_logo.png" style="height:75px; width:auto;" id="orangeImg"/>
+              </div>
+              <div class="rlis-overlay-orange-spacer"></div>
+            </div>
+          </div>
+        </div>
+        <div class="rlis-overlay-scoreboard-bottom">
+          <div class="rlis-overlay-bottom-left-spacer"></div>
+          <div class="rlis-overlay-info-area">
+            <div class="rlis-overlay-info-area-left">
+              <span class="rlis-overlay-info-left-text">
+                <span>Game1</span>
+                <br />
+              </span>
+            </div>
+            <div class="rlis-overlay-info-area-middle">
+              <span class="rlis-overlay-stage-text">
+                <span>GROUP STAGE</span>
+                <br />
+              </span>
+            </div>
+            <div class="rlis-overlay-info-area-right">
+              <span class="rlis-overlay-info-right-text">BO5</span>
+            </div>
+          </div>
+          <div class="rlis-overlay-bottom-right-spacer"></div>
+        </div>
+      </div>
+      <div class="rlis-overlay-top-right-spacer">
+        <div class="rlis-overlay-orange-names">
+          <div class="rlis-overlay-orange-name-area1">
+            <span class="rlis-overlay-orange-name-text1">Player Name</span>
+            <div class="rlis-overlay-orange-boost1"></div>
+          </div>
+          <div class="rlis-overlay-orange-gap1"></div>
+          <div class="rlis-overlay-orange-name-area2">
+            <span class="rlis-overlay-oranege-name-text2">Player Name</span>
+            <div class="rlis-overlay-orange-boost2"></div>
+          </div>
+          <div class="rlis-overlay-orange-gap2"></div>
+          <div class="rlis-overlay-orange-name-area3">
+            <span class="rlis-overlay-orange-name-text3">Player Name</span>
+            <div class="rlis-overlay-orange-boost3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="rlis-overlay-overlay-middle"></div>
+    <div class="rlis-overlay-overlay-bottom">
+      <div class="rlis-overlay-stats-banner">
+        <div class="rlis-overlay-name-area">
+          <span class="rlis-overlay-name-text">Name</span>
+        </div>
+        <div class="rlis-overlay-score-area">
+          <span class="rlis-overlay-score-text">Score: </span>
+          <span class="rlis-overlay-score-amount">1000</span>
+        </div>
+        <div class="rlis-overlay-goals-area">
+          <span class="rlis-overlay-goals-text">Goals: </span>
+          <span class="rlis-overlay-goals-amount">1000</span>
+        </div>
+        <div class="rlis-overlay-assists-area">
+          <span class="rlis-overlay-assists-text">Assists: </span>
+          <span class="rlis-overlay-assists-amount">1000</span>
+        </div>
+        <div class="rlis-overlay-shots-area">
+          <span class="rlis-overlay-shots-text">Shots: </span>
+          <span class="rlis-overlay-shots-amount">1000</span>
+        </div>
+        <div class="rlis-overlay-saves-area">
+          <span class="rlis-overlay-saves-text">Saves: </span>
+          <span class="rlis-overlay-saves-amount">1000</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</html>
