@@ -1,0 +1,383 @@
+const WsSubscribers = {
+    __subscribers: {},
+    websocket: undefined,
+    webSocketConnected: false,
+    registerQueue: [],
+    init: function(port, debug, debugFilters) {
+        port = port || 49322;
+        debug = debug || false;
+        if (debug) {
+            if (debugFilters !== undefined) {
+                console.warn("WebSocket Debug Mode enabled with filtering. Only events not in the filter list will be dumped");
+            } else {
+                console.warn("WebSocket Debug Mode enabled without filters applied. All events will be dumped to console");
+                console.warn("To use filters, pass in an array of 'channel:event' strings to the second parameter of the init function");
+            }
+        }
+        WsSubscribers.webSocket = new WebSocket("ws://localhost:" + port);
+        WsSubscribers.webSocket.onmessage = function (event) {
+            let jEvent = JSON.parse(event.data);
+            if (!jEvent.hasOwnProperty('event')) {
+                return;
+            }
+            let eventSplit = jEvent.event.split(':');
+            let channel = eventSplit[0];
+            let event_event = eventSplit[1];
+            if (debug) {
+                if (!debugFilters) {
+                    console.log(channel, event_event, jEvent);
+                } else if (debugFilters && debugFilters.indexOf(jEvent.event) < 0) {
+                    console.log(channel, event_event, jEvent);
+                }
+            }
+            WsSubscribers.triggerSubscribers(channel, event_event, jEvent.data);
+        };
+        WsSubscribers.webSocket.onopen = function () {
+            WsSubscribers.triggerSubscribers("ws", "open");
+            WsSubscribers.webSocketConnected = true;
+            WsSubscribers.registerQueue.forEach((r) => {
+                WsSubscribers.send("wsRelay", "register", r);
+            });
+            WsSubscribers.registerQueue = [];
+        };
+        WsSubscribers.webSocket.onerror = function () {
+            WsSubscribers.triggerSubscribers("ws", "error");
+            WsSubscribers.webSocketConnected = false;
+        };
+        WsSubscribers.webSocket.onclose = function () {
+            WsSubscribers.triggerSubscribers("ws", "close");
+            WsSubscribers.webSocketConnected = false;
+        };
+    },
+    /**
+     * Add callbacks for when certain events are thrown
+     * Execution is guaranteed to be in First In First Out order
+     * @param channels
+     * @param events
+     * @param callback
+     */
+    subscribe: function(channels, events, callback) {
+        if (typeof channels === "string") {
+            let channel = channels;
+            channels = [];
+            channels.push(channel);
+        }
+        if (typeof events === "string") {
+            let event = events;
+            events = [];
+            events.push(event);
+        }
+        channels.forEach(function(c) {
+            events.forEach(function (e) {
+                if (!WsSubscribers.__subscribers.hasOwnProperty(c)) {
+                    WsSubscribers.__subscribers[c] = {};
+                }
+                if (!WsSubscribers.__subscribers[c].hasOwnProperty(e)) {
+                    WsSubscribers.__subscribers[c][e] = [];
+                    if (WsSubscribers.webSocketConnected) {
+                        WsSubscribers.send("wsRelay", "register", `${c}:${e}`);
+                    } else {
+                        WsSubscribers.registerQueue.push(`${c}:${e}`);
+                    }
+                }
+                WsSubscribers.__subscribers[c][e].push(callback);
+            });
+        })
+    },
+    clearEventCallbacks: function (channel, event) {
+        if (WsSubscribers.__subscribers.hasOwnProperty(channel) && WsSubscribers.__subscribers[channel].hasOwnProperty(event)) {
+            WsSubscribers.__subscribers[channel] = {};
+        }
+    },
+    triggerSubscribers: function (channel, event, data) {
+        if (WsSubscribers.__subscribers.hasOwnProperty(channel) && WsSubscribers.__subscribers[channel].hasOwnProperty(event)) {
+            WsSubscribers.__subscribers[channel][event].forEach(function(callback) {
+                if (callback instanceof Function) {
+                    callback(data);
+                }
+            });
+        }
+    },
+    send: function (channel, event, data) {
+        if (typeof channel !== 'string') {
+            console.error("Channel must be a string");
+            return;
+        }
+        if (typeof event !== 'string') {
+            console.error("Event must be a string");
+            return;
+        }
+        if (channel === 'local') {
+            this.triggerSubscribers(channel, event, data);
+        } else {
+            let cEvent = channel + ":" + event;
+            WsSubscribers.webSocket.send(JSON.stringify({
+                'event': cEvent,
+                'data': data
+            }));
+        }
+    }
+};
+
+var autoNames = true;
+var timer = document.getElementById('timer');
+var gameNumber = 1;
+var gameText = document.getElementById('gameText');
+var blueCount = 0;
+var orangeCount = 0;
+
+var blueName = document.getElementById('blueTeamName');
+var blueScore = document.getElementById('blueScore');
+var blueImg = document.getElementById('blueImg');;
+var blue1 = document.getElementById('blueG1');
+var blue2 = document.getElementById('blueG2');
+var blue3 = document.getElementById('blueG3');
+var blue4 = document.getElementById('blueG4');
+var blue5 = document.getElementById('blueG5');
+
+var orangeName = document.getElementById('orangeTeamName');
+var orangeScore = document.getElementById('orangeScore');
+var orangeImg = document.getElementById('orangeImg');;
+var Orange1 = document.getElementById('orangeG1');
+var Orange2 = document.getElementById('orangeG2');
+var Orange3 = document.getElementById('orangeG3');
+var Orange4 = document.getElementById('orangeG4');
+var Orange5 = document.getElementById('orangeG5');
+
+const circle = document.querySelector('.progress-ring__circle');
+const radius = circle.r.baseVal.value;
+const circumference = radius * 2 * Math.PI;
+circle.style.strokeDasharray = `${circumference} ${circumference}`;
+circle.style.strokeDashoffset = circumference;
+
+$(() => {
+	WsSubscribers.init(49322, true)
+	WsSubscribers.subscribe("game", "update_state", (d) => {
+	    var blueTeamName = d['game']['teams'][0]['name'];
+	    var orangeTeamName = d['game']['teams'][1]['name'];
+		blueScore.innerHTML = (d['game']['teams'][0]['score']);
+		orangeScore.innerHTML = (d['game']['teams'][1]['score']);
+		gameText.innerHTML = ("GAME " + gameNumber);
+
+        if(autoNames == true){
+            blueName.innerHTML = (blueTeamName);
+            orangeName.innerHTML = (orangeTeamName);
+
+            blueImg.src = "Images/rli_logo.png";
+            orangeImg.src = "Images/rli_logo.png";
+        }
+
+		var timeLeft = parseInt(d['game']['time_seconds']);
+		var m = Math.floor(timeLeft/60);
+		var s = (timeLeft - (m*60));
+		if(s.toString().length < 2){
+		s = "0" + s;
+		}
+		var TimeLeft = m + ":" + s;
+		if(d['game']['isOT'] == true){
+		TimeLeft = "+" + TimeLeft;
+		}
+		timer.innerHTML = (TimeLeft);
+
+		var blueMembers = 0;
+		var orangeMembers = 0;
+		let bluePlayerBoost1 = document.getElementById("bluePlayerBoost1");
+		let bluePlayerBoost2 = document.getElementById("bluePlayerBoost2");
+		let bluePlayerBoost3 = document.getElementById("bluePlayerBoost3");
+		let orangePlayerBoost1 = document.getElementById("orangePlayerBoost1");
+		let orangePlayerBoost2 = document.getElementById("orangePlayerBoost2");
+		let orangePlayerBoost3 = document.getElementById("orangePlayerBoost3");
+
+		let bluePlayer1 = document.getElementById("bluePlayerName1");
+		let bluePlayer2 = document.getElementById("bluePlayerName2");
+		let bluePlayer3 = document.getElementById("bluePlayerName3");
+		let orangePlayer1 = document.getElementById("orangePlayerName1");
+		let orangePlayer2 = document.getElementById("orangePlayerName2");
+		let orangePlayer3 = document.getElementById("orangePlayerName3");
+		let activeBlue = "linear-gradient(to right, #001024, #004478)";
+		let inactiveBlue = "linear-gradient(to right, #003576, #007ad8)";
+		let activeOrange = "linear-gradient(to left, #683400, #b45500)";
+		let inactiveOrange = "linear-gradient(to left, #ae5600, #f77400)";
+		let demoedBlue = "linear-gradient(to left, #bbbbbb, #525252)";
+		let demoedOrange = "linear-gradient(to left, #525252, #bbbbbb)";
+		let testActiveBlue = "linear-gradient(to left, #bbbbbb, #525252)";
+		let testActiveOrange = "linear-gradient(to left, #ae5600, #f77400)";
+
+        let playerSpectatingArea = document.getElementById("playerSpectatingArea");
+		let playerSpectatingName = document.getElementById("playerSpectatingName");
+		let playerSpectatingScore = document.getElementById("playerSpectatingScore");
+		let playerSpectatingGoals = document.getElementById("playerSpectatingGoals");
+		let playerSpectatingAssists = document.getElementById("playerSpectatingAssists");
+        let playerSpectatingShots = document.getElementById("playerSpectatingShots");
+        let playerSpectatingSaves = document.getElementById("playerSpectatingSaves");
+        let playerSpectatingBoost = document.getElementById("playerSpectatingBoost");
+
+		Object.keys(d['players']).forEach((id) => {
+		    if(d['players'][id].team == 0){
+		        blueMembers += 1;
+
+		        var gradientAmount = "linear-gradient(to left, #2c2c2c " + (100 - d['players'][id].boost) + "%, #ffa500 0%, #e09100)";
+		        $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-top-left-spacer .rlis-overlay-blue-names .rlis-overlay-blue-name-area" + blueMembers + " .rlis-overlay-blue-name-text" + blueMembers).text(d['players'][id].name);
+
+		        if (d['players'][id].id == d['game']['target']) {
+		            orangePlayer1.style.background = inactiveOrange;
+		            orangePlayer2.style.background = inactiveOrange;
+		            orangePlayer3.style.background = inactiveOrange;
+		            if((blueMembers - 3) == 0){
+		                bluePlayer3.style.background = activeBlue;
+		                bluePlayer2.style.background = inactiveBlue;
+		                bluePlayer1.style.background = inactiveBlue;
+		            }else if((blueMembers - 3) == -1){
+		                bluePlayer2.style.background = activeBlue;
+                        bluePlayer3.style.background = inactiveBlue;
+                        bluePlayer1.style.background = inactiveBlue;
+		            }else if((blueMembers - 3) == -2){
+                        bluePlayer1.style.background = activeBlue;
+                        bluePlayer3.style.background = inactiveBlue;
+                        bluePlayer2.style.background = inactiveBlue;
+		            }
+		            playerSpectatingName.innerHTML = d['players'][id].name;
+		            playerSpectatingGoals.innerHTML = d['players'][id].goals;
+		            playerSpectatingAssists.innerHTML = d['players'][id].assists;
+		            playerSpectatingScore.innerHTML = d['players'][id].score;
+		            playerSpectatingShots.innerHTML = d['players'][id].shots;
+		            playerSpectatingSaves.innerHTML = d['players'][id].saves;
+		            playerSpectatingBoost.innerHTML = d['players'][id].boost;
+		            setProgress(d['players'][id].boost);
+		            playerSpectatingArea.style.background = inactiveBlue;
+		        }
+
+		        if(blueMembers == 1){
+                    bluePlayerBoost1.style.background = gradientAmount;
+                }else if(blueMembers == 2){
+                    bluePlayerBoost2.style.background = gradientAmount;
+                }else if(blueMembers == 3){
+                    bluePlayerBoost3.style.background = gradientAmount;
+                }
+
+		    }else if(d['players'][id].team == 1){
+                orangeMembers += 1;
+
+                var gradientAmount = "linear-gradient(to right, #2c2c2c " + (100 - d['players'][id].boost) + "%, #ffa500 0%, #e09100)";
+                $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-top-right-spacer .rlis-overlay-orange-names .rlis-overlay-orange-name-area" + orangeMembers + " .rlis-overlay-orange-name-text" + orangeMembers).text(d['players'][id].name);
+
+                if (d['players'][id].id == d['game']['target']) {
+                    bluePlayer1.style.background = inactiveBlue;
+                    bluePlayer2.style.background = inactiveBlue;
+                    bluePlayer3.style.background = inactiveBlue;
+                    if((orangeMembers - 3) == 0){
+                        orangePlayer3.style.background = activeOrange;
+                        orangePlayer2.style.background = inactiveOrange;
+                        orangePlayer1.style.background = inactiveOrange;
+                    }else if((orangeMembers - 3) == -1){
+                        orangePlayer2.style.background = activeOrange;
+                        orangePlayer3.style.background = inactiveOrange;
+                        orangePlayer1.style.background = inactiveOrange;
+                    }else if((orangeMembers - 3) == -2){
+                        orangePlayer1.style.background = activeOrange;
+                        orangePlayer2.style.background = inactiveOrange;
+                        orangePlayer3.style.background = inactiveOrange;
+                    }
+                    playerSpectatingName.innerHTML = d['players'][id].name;
+                    playerSpectatingGoals.innerHTML = d['players'][id].goals;
+                    playerSpectatingAssists.innerHTML = d['players'][id].assists;
+                    playerSpectatingScore.innerHTML = d['players'][id].score;
+                    playerSpectatingShots.innerHTML = d['players'][id].shots;
+                    playerSpectatingSaves.innerHTML = d['players'][id].saves;
+                    playerSpectatingBoost.innerHTML = d['players'][id].boost;
+                    setProgress(d['players'][id].boost);
+                    playerSpectatingArea.style.background = inactiveOrange;
+                }
+
+                if(orangeMembers == 1){
+                    orangePlayerBoost1.style.background = gradientAmount;
+                }else if(orangeMembers == 2){
+                    orangePlayerBoost2.style.background = gradientAmount;
+                }else if(orangeMembers == 3){
+                    orangePlayerBoost3.style.background = gradientAmount;
+                }
+		    }
+        });
+
+        blueMembers = 0;
+        orangeMembers = 0;
+        Object.keys(d['players']).forEach((id) => {
+            if(d['players'][id].team == 0){
+                blueMembers += 1;
+                if(blueMembers == 1){
+                    if(d['players'][id].isDead == true){
+                        bluePlayer1.style.background = demoedBlue;
+                    }
+                }else if(blueMembers == 2){
+                    if(d['players'][id].isDead == true){
+                        bluePlayer2.style.background = demoedBlue;
+                    }
+                }else if(blueMembers == 3){
+                    if(d['players'][id].isDead == true){
+                        bluePlayer3.style.background = demoedBlue;
+                    }
+                }
+            }else if(d['players'][id].team == 1){
+                orangeMembers += 1;
+                if(orangeMembers == 1){
+                    if(d['players'][id].isDead == true){
+                        orangePlayer1.style.background = demoedOrange;
+                    }
+                }else if(orangeMembers == 2){
+                    if(d['players'][id].isDead == true){
+                        orangePlayer2.style.background = demoedOrange;
+                    }
+                }else if(orangeMembers == 3){
+                    if(d['players'][id].isDead == true){
+                        orangePlayer3.style.background = demoedOrange;
+                    }
+                }
+            }
+        });
+	});
+
+    WsSubscribers.subscribe("game", "match_ended", (e) => {
+        if(e['winner_team_num'] == 0){
+            if(blueCount == 0){
+              blue1.style.color = "#2ed8ff";
+              blueCount = 1;
+            }else if(blueCount == 1){
+              blue2.style.color = "#2ed8ff";
+              blueCount = 2;
+            }else if(blueCount == 2){
+              blue3.style.color = "#2ed8ff";
+              blueCount = 3;
+            }else if(blueCount == 3){
+              blue4.style.color = "#2ed8ff";
+              blueCount = 4;
+            }else if(blueCount == 4){
+              blue5.style.color = "#2ed8ff";
+              blueCount = 5;
+            }
+        }else{
+            if(orangeCount == 0){
+              Orange1.style.color = "#ffcd2e";
+              orangeCount = 1;
+            }else if(orangeCount == 1){
+              Orange2.style.color = "#ffcd2e";
+              orangeCount = 2;
+            }else if(orangeCount == 2){
+              Orange3.style.color = "#ffcd2e";
+              orangeCount = 3;
+            }else if(orangeCount == 3){
+              Orange4.style.color = "#ffcd2e";
+              orangeCount = 4;
+            }else if(orangeCount == 4){
+               Orange5.style.color = "#ffcd2e";
+               orangeCount = 5;
+           }
+        }
+        gameNumber++;
+    });
+
+});
+
+function setProgress(percent) {
+  const offset = circumference - percent / 100 * circumference;
+  circle.style.strokeDashoffset = offset;
+}
