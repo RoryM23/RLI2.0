@@ -254,7 +254,6 @@ $(".controller-container .controller-general-info .controller-no-series-area .bu
         var i = "Show Match";
         blueCount = 0;
         orangeCount = 0;
-        $(".controller-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
         blue1.style.visibility = "hidden";
         blue2.style.visibility = "hidden";
         blue3.style.visibility = "hidden";
@@ -278,13 +277,13 @@ $(".controller-container .controller-general-info .controller-no-series-area .bu
         WsSubscribers.send("series", "none", i);
         gameNumber = 1;
         gameText.innerHTML = ("GAME " + gameNumber);
+        $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
 });
 
 $(".controller-container .controller-general-info .controller-no-series-area .button01").click(function(){
         blueCount = 0;
         orangeCount = 0;
         var i = "BO3";
-        $(".controller-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
         blue1.style.visibility = "visible";
         blue2.style.visibility = "visible";
         blue3.style.visibility = "hidden";
@@ -308,13 +307,13 @@ $(".controller-container .controller-general-info .controller-no-series-area .bu
         WsSubscribers.send("series", "bo3", i);
         gameNumber = 1;
         gameText.innerHTML = ("GAME " + gameNumber);
+        $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
 });
 
 $(".controller-container .controller-general-info .controller-no-series-area .button02").click(function(){
         blueCount = 0;
         orangeCount = 0;
         var i = "BO5";
-        $(".controller-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
         blue1.style.visibility = "visible";
         blue2.style.visibility = "visible";
         blue3.style.visibility = "visible";
@@ -338,13 +337,13 @@ $(".controller-container .controller-general-info .controller-no-series-area .bu
         WsSubscribers.send("series", "bo5", i);
         gameNumber = 1;
         gameText.innerHTML = ("GAME " + gameNumber);
+        $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
 });
 
 $(".controller-container .controller-general-info .controller-no-series-area .button03").click(function(){
         blueCount = 0;
         orangeCount = 0;
         var i = "BO7";
-        $(".controller-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
         blue1.style.visibility = "visible";
         blue2.style.visibility = "visible";
         blue3.style.visibility = "visible";
@@ -368,13 +367,13 @@ $(".controller-container .controller-general-info .controller-no-series-area .bu
         WsSubscribers.send("series", "bo7", i);
         gameNumber = 1;
         gameText.innerHTML = ("GAME " + gameNumber);
+        $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
 });
 
 $(".controller-container .controller-general-info .controller-no-series-area .button04").click(function(){
         blueCount = 0;
         orangeCount = 0;
         var i = "BO9";
-        $(".controller-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
         blue1.style.visibility = "visible";
         blue2.style.visibility = "visible";
         blue3.style.visibility = "visible";
@@ -398,6 +397,7 @@ $(".controller-container .controller-general-info .controller-no-series-area .bu
         WsSubscribers.send("series", "bo9", i);
         gameNumber = 1;
         gameText.innerHTML = ("GAME " + gameNumber);
+        $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
 });
 
 $(".controller-container .controller-overlay-body .controller-blue-controls .controller-container03 .controller-container05 .controller-button08").click(function(){

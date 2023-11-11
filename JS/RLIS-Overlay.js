@@ -421,7 +421,6 @@ $(() => {
             var i = "Show Match";
             blueCount = 0;
             orangeCount = 0;
-            $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
             blue1.style.visibility = "hidden";
             blue2.style.visibility = "hidden";
             blue3.style.visibility = "hidden";
@@ -444,13 +443,13 @@ $(() => {
             Orange5.style.color = "#000";
             gameNumber = 1;
             gameText.innerHTML = ("GAME " + gameNumber);
+            $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
     });
 
     WsSubscribers.subscribe("series", "bo3", (e) => {
             blueCount = 0;
             orangeCount = 0;
             var i = "BO3";
-            $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
             blue1.style.visibility = "visible";
             blue2.style.visibility = "visible";
             blue3.style.visibility = "hidden";
@@ -473,13 +472,13 @@ $(() => {
             Orange5.style.color = "#000";
             gameNumber = 1;
             gameText.innerHTML = ("GAME " + gameNumber);
+            $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
     });
 
     WsSubscribers.subscribe("series", "bo5", (e) => {
             blueCount = 0;
             orangeCount = 0;
             var i = "BO5";
-            $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
             blue1.style.visibility = "visible";
             blue2.style.visibility = "visible";
             blue3.style.visibility = "visible";
@@ -502,6 +501,7 @@ $(() => {
             Orange5.style.color = "#000";
             gameNumber = 1;
             gameText.innerHTML = ("GAME " + gameNumber);
+            $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
     });
 
     WsSubscribers.subscribe("series", "bo7", (e) => {
@@ -531,13 +531,13 @@ $(() => {
             Orange5.style.color = "#000";
             gameNumber = 1;
             gameText.innerHTML = ("GAME " + gameNumber);
+            $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
     });
 
     WsSubscribers.subscribe("series", "bo9", (e) => {
             blueCount = 0;
             orangeCount = 0;
             var i = "BO9";
-            $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
             blue1.style.visibility = "visible";
             blue2.style.visibility = "visible";
             blue3.style.visibility = "visible";
@@ -560,6 +560,7 @@ $(() => {
             Orange5.style.color = "#000";
             gameNumber = 1;
             gameText.innerHTML = ("GAME " + gameNumber);
+            $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
     });
 
     WsSubscribers.subscribe("series", "BluePlus", (e) => {
