@@ -124,6 +124,7 @@ const WsSubscribers = {
 
 
 
+
 //EDIT FROM HERE DOWN. DO NOT TOUCH THE ABOVE
 
 
@@ -172,20 +173,14 @@ var Orange3 = document.getElementById('orangeG3');
 var Orange4 = document.getElementById('orangeG4');
 var Orange5 = document.getElementById('orangeG5');
 
-const circle = document.querySelector('.progress-ring__circle');
-const radius = circle.r.baseVal.value;
-const circumference = radius * 2 * Math.PI;
-circle.style.strokeDasharray = `${circumference} ${circumference}`;
-circle.style.strokeDashoffset = circumference;
-
 $(() => {
 	WsSubscribers.init(49322, true)
 	WsSubscribers.subscribe("game", "update_state", (d) => {
 	    var blueTeamName = d['game']['teams'][0]['name'];
-	    var orangeTeamName = d['game']['teams'][1]['name'];
-		blueScore.innerHTML = (d['game']['teams'][0]['score']);
-		orangeScore.innerHTML = (d['game']['teams'][1]['score']);
-		gameText.innerHTML = ("GAME " + gameNumber);
+        var orangeTeamName = d['game']['teams'][1]['name'];
+        blueScore.innerHTML = (d['game']['teams'][0]['score']);
+        orangeScore.innerHTML = (d['game']['teams'][1]['score']);
+        gameText.innerHTML = ("GAME " + gameNumber);
 
         if(autoNames == true){
             blueName.innerHTML = (blueTeamName);
@@ -195,182 +190,82 @@ $(() => {
             orangeImg.src = "Images/rli_logo.png";
         }
 
-		var timeLeft = parseInt(d['game']['time_seconds']);
-		var m = Math.floor(timeLeft/60);
-		var s = (timeLeft - (m*60));
-		if(s.toString().length < 2){
-		s = "0" + s;
-		}
-		var TimeLeft = m + ":" + s;
-		if(d['game']['isOT'] == true){
-		TimeLeft = "+ " + TimeLeft;
-		}
-		timer.innerHTML = (TimeLeft);
+        var timeLeft = parseInt(d['game']['time_seconds']);
+        var m = Math.floor(timeLeft/60);
+        var s = (timeLeft - (m*60));
+        if(s.toString().length < 2){
+        s = "0" + s;
+        }
+        var TimeLeft = m + ":" + s;
+        if(d['game']['isOT'] == true){
+        TimeLeft = "+ " + TimeLeft;
+        }
+        timer.innerHTML = (TimeLeft);
 
+		let bluePlayer1 = document.getElementById("bluePlayer1");
+        let bluePlayer2 = document.getElementById("bluePlayer2");
+        let bluePlayer3 = document.getElementById("bluePlayer3");
+        let orangePlayer1 = document.getElementById("orangePlayer1");
+        let orangePlayer2 = document.getElementById("orangePlayer2");
+        let orangePlayer3 = document.getElementById("orangePlayer3");
+        /*
+        if(d['game']['hasWinner'] == false){
+            orangePlayer1.style.visibility = 'hidden';
+            orangePlayer2.style.visibility = 'hidden';
+            orangePlayer3.style.visibility = 'hidden';
+            bluePlayer1.style.visibility = 'hidden';
+            bluePlayer2.style.visibility = 'hidden';
+            bluePlayer3.style.visibility = 'hidden';
+        }
+        */
 
-        //Spectating Specific Variables
 		var blueMembers = 0;
 		var orangeMembers = 0;
-		let bluePlayerBoost1 = document.getElementById("bluePlayerBoost1");
-		let bluePlayerBoost2 = document.getElementById("bluePlayerBoost2");
-		let bluePlayerBoost3 = document.getElementById("bluePlayerBoost3");
-		let orangePlayerBoost1 = document.getElementById("orangePlayerBoost1");
-		let orangePlayerBoost2 = document.getElementById("orangePlayerBoost2");
-		let orangePlayerBoost3 = document.getElementById("orangePlayerBoost3");
+		if(d['game']['hasWinner'] == false && timeLeft < 200){
+            Object.keys(d['players']).forEach((id) => {
+                if(d['players'][id].team == 0){
 
-		let bluePlayer1 = document.getElementById("bluePlayerName1");
-		let bluePlayer2 = document.getElementById("bluePlayerName2");
-		let bluePlayer3 = document.getElementById("bluePlayerName3");
-		let orangePlayer1 = document.getElementById("orangePlayerName1");
-		let orangePlayer2 = document.getElementById("orangePlayerName2");
-		let orangePlayer3 = document.getElementById("orangePlayerName3");
-		let activeBlue = "linear-gradient(to right, #001024, #004478)";
-		let inactiveBlue = "linear-gradient(to right, #003576, #007ad8)";
-		let activeOrange = "linear-gradient(to left, #683400, #b45500)";
-		let inactiveOrange = "linear-gradient(to left, #ae5600, #f77400)";
-		let demoedBlue = "linear-gradient(to left, #bbbbbb, #525252)";
-		let demoedOrange = "linear-gradient(to left, #525252, #bbbbbb)";
-		//I don't remember adding these next 2 icl
-		let testActiveBlue = "linear-gradient(to left, #bbbbbb, #525252)";
-		let testActiveOrange = "linear-gradient(to left, #ae5600, #f77400)";
+                    blueMembers += 1;
 
-        let playerSpectatingArea = document.getElementById("playerSpectatingArea");
-		let playerSpectatingName = document.getElementById("playerSpectatingName");
-		let playerSpectatingScore = document.getElementById("playerSpectatingScore");
-		let playerSpectatingGoals = document.getElementById("playerSpectatingGoals");
-		let playerSpectatingAssists = document.getElementById("playerSpectatingAssists");
-        let playerSpectatingShots = document.getElementById("playerSpectatingShots");
-        let playerSpectatingSaves = document.getElementById("playerSpectatingSaves");
-        let playerSpectatingBoost = document.getElementById("playerSpectatingBoost");
-        let playerSpectatingBoostMeter = document.getElementById("boostMeter");
+                    let currentBluePlayer = document.getElementById("bluePlayer" + blueMembers);
+                    currentBluePlayer.style.visibility = 'visible';
 
-		Object.keys(d['players']).forEach((id) => {
-		    if(d['players'][id].team == 0){
-		        blueMembers += 1;
 
-		        var gradientAmount = "linear-gradient(to left, #2c2c2c " + (100 - d['players'][id].boost) + "%, #ffa500 0%, #e09100)";
-		        $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-top-left-spacer .rlis-overlay-blue-names .rlis-overlay-blue-name-area" + blueMembers + " .rlis-overlay-blue-name-text" + blueMembers).text(d['players'][id].name);
+                    $(".stats-container .stats-container02 .stats-blue-player-area-" + blueMembers + " .stats-blue-name-area-" + blueMembers +" .stats-blue-name-text-" + blueMembers).text(d['players'][id].name);
+                    $(".stats-container .stats-container02 .stats-blue-player-area-" + blueMembers + " .stats-blue-score-area-" + blueMembers +" .stats-blue-score-text-" + blueMembers).text(d['players'][id].score);
+                    $(".stats-container .stats-container02 .stats-blue-player-area-" + blueMembers + " .stats-blue-goals-area-" + blueMembers +" .stats-blue-goals-text-" + blueMembers).text(d['players'][id].goals);
+                    $(".stats-container .stats-container02 .stats-blue-player-area-" + blueMembers + " .stats-blue-shots-area-" + blueMembers +" .stats-blue-shots-text-" + blueMembers).text(d['players'][id].shots);
+                    $(".stats-container .stats-container02 .stats-blue-player-area-" + blueMembers + " .stats-blue-assists-area-" + blueMembers +" .stats-blue-assists-text-" + blueMembers).text(d['players'][id].assists);
+                    $(".stats-container .stats-container02 .stats-blue-player-area-" + blueMembers + " .stats-blue-saves-area-" + blueMembers +" .stats-blue-saves-text-" + blueMembers).text(d['players'][id].saves);
+                    $(".stats-container .stats-container02 .stats-blue-player-area-" + blueMembers + " .stats-blue-demos-area-" + blueMembers +" .stats-blue-demos-text-" + blueMembers).text(d['players'][id].demos);
 
-		        if (d['players'][id].id == d['game']['target']) {
-		            orangePlayer1.style.background = inactiveOrange;
-		            orangePlayer2.style.background = inactiveOrange;
-		            orangePlayer3.style.background = inactiveOrange;
-		            if((blueMembers - 3) == 0){
-		                bluePlayer3.style.background = activeBlue;
-		                bluePlayer2.style.background = inactiveBlue;
-		                bluePlayer1.style.background = inactiveBlue;
-		            }else if((blueMembers - 3) == -1){
-		                bluePlayer2.style.background = activeBlue;
-                        bluePlayer3.style.background = inactiveBlue;
-                        bluePlayer1.style.background = inactiveBlue;
-		            }else if((blueMembers - 3) == -2){
-                        bluePlayer1.style.background = activeBlue;
-                        bluePlayer3.style.background = inactiveBlue;
-                        bluePlayer2.style.background = inactiveBlue;
-		            }
-		            playerSpectatingName.innerHTML = d['players'][id].name;
-		            playerSpectatingGoals.innerHTML = d['players'][id].goals;
-		            playerSpectatingAssists.innerHTML = d['players'][id].assists;
-		            playerSpectatingScore.innerHTML = d['players'][id].score;
-		            playerSpectatingShots.innerHTML = d['players'][id].shots;
-		            playerSpectatingSaves.innerHTML = d['players'][id].saves;
-		            playerSpectatingBoost.innerHTML = d['players'][id].boost;
-		            setProgress(d['players'][id].boost);
-		            playerSpectatingArea.style.background = inactiveBlue;
-		            playerSpectatingBoostMeter.style.fill = "url(#blueGradient)";
-		        }
+                }else if(d['players'][id].team == 1){
 
-		        if(blueMembers == 1){
-                    bluePlayerBoost1.style.background = gradientAmount;
-                }else if(blueMembers == 2){
-                    bluePlayerBoost2.style.background = gradientAmount;
-                }else if(blueMembers == 3){
-                    bluePlayerBoost3.style.background = gradientAmount;
+                    orangeMembers += 1;
+                    let currentOrangePlayer = document.getElementById("orangePlayer" + orangeMembers);
+                    currentOrangePlayer.style.visibility = 'visible';
+
+                    $(".stats-container .stats-container02 .stats-orange-player-area-" + orangeMembers + " .stats-orange-name-area-" + orangeMembers +" .stats-orange-name-text-" + orangeMembers).text(d['players'][id].name);
+                    $(".stats-container .stats-container02 .stats-orange-player-area-" + orangeMembers + " .stats-orange-score-area-" + orangeMembers +" .stats-orange-score-text-" + orangeMembers).text(d['players'][id].score);
+                    $(".stats-container .stats-container02 .stats-orange-player-area-" + orangeMembers + " .stats-orange-goals-area-" + orangeMembers +" .stats-orange-goals-text-" + orangeMembers).text(d['players'][id].goals);
+                    $(".stats-container .stats-container02 .stats-orange-player-area-" + orangeMembers + " .stats-orange-shots-area-" + orangeMembers +" .stats-orange-shots-text-" + orangeMembers).text(d['players'][id].shots);
+                    $(".stats-container .stats-container02 .stats-orange-player-area-" + orangeMembers + " .stats-orange-assists-area-" + orangeMembers +" .stats-orange-assists-text-" + orangeMembers).text(d['players'][id].assists);
+                    $(".stats-container .stats-container02 .stats-orange-player-area-" + orangeMembers + " .stats-orange-saves-area-" + orangeMembers +" .stats-orange-saves-text-" + orangeMembers).text(d['players'][id].saves);
+                    $(".stats-container .stats-container02 .stats-orange-player-area-" + orangeMembers + " .stats-orange-demos-area-" + orangeMembers +" .stats-orange-demos-text-" + orangeMembers).text(d['players'][id].demos);
+
                 }
-
-		    }else if(d['players'][id].team == 1){
-                orangeMembers += 1;
-
-                var gradientAmount = "linear-gradient(to right, #2c2c2c " + (100 - d['players'][id].boost) + "%, #ffa500 0%, #e09100)";
-                $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-top-right-spacer .rlis-overlay-orange-names .rlis-overlay-orange-name-area" + orangeMembers + " .rlis-overlay-orange-name-text" + orangeMembers).text(d['players'][id].name);
-
-                if (d['players'][id].id == d['game']['target']) {
-                    bluePlayer1.style.background = inactiveBlue;
-                    bluePlayer2.style.background = inactiveBlue;
-                    bluePlayer3.style.background = inactiveBlue;
-                    if((orangeMembers - 3) == 0){
-                        orangePlayer3.style.background = activeOrange;
-                        orangePlayer2.style.background = inactiveOrange;
-                        orangePlayer1.style.background = inactiveOrange;
-                    }else if((orangeMembers - 3) == -1){
-                        orangePlayer2.style.background = activeOrange;
-                        orangePlayer3.style.background = inactiveOrange;
-                        orangePlayer1.style.background = inactiveOrange;
-                    }else if((orangeMembers - 3) == -2){
-                        orangePlayer1.style.background = activeOrange;
-                        orangePlayer2.style.background = inactiveOrange;
-                        orangePlayer3.style.background = inactiveOrange;
-                    }
-                    playerSpectatingName.innerHTML = d['players'][id].name;
-                    playerSpectatingGoals.innerHTML = d['players'][id].goals;
-                    playerSpectatingAssists.innerHTML = d['players'][id].assists;
-                    playerSpectatingScore.innerHTML = d['players'][id].score;
-                    playerSpectatingShots.innerHTML = d['players'][id].shots;
-                    playerSpectatingSaves.innerHTML = d['players'][id].saves;
-                    playerSpectatingBoost.innerHTML = d['players'][id].boost;
-                    setProgress(d['players'][id].boost);
-                    playerSpectatingArea.style.background = inactiveOrange;
-                    playerSpectatingBoostMeter.style.fill = "url(#orangeGradient)";
-                }
-
-                if(orangeMembers == 1){
-                    orangePlayerBoost1.style.background = gradientAmount;
-                }else if(orangeMembers == 2){
-                    orangePlayerBoost2.style.background = gradientAmount;
-                }else if(orangeMembers == 3){
-                    orangePlayerBoost3.style.background = gradientAmount;
-                }
-		    }
-        });
-
-        blueMembers = 0;
-        orangeMembers = 0;
-        Object.keys(d['players']).forEach((id) => {
-            if(d['players'][id].team == 0){
-                blueMembers += 1;
-                if(blueMembers == 1){
-                    if(d['players'][id].isDead == true){
-                        bluePlayer1.style.background = demoedBlue;
-                    }
-                }else if(blueMembers == 2){
-                    if(d['players'][id].isDead == true){
-                        bluePlayer2.style.background = demoedBlue;
-                    }
-                }else if(blueMembers == 3){
-                    if(d['players'][id].isDead == true){
-                        bluePlayer3.style.background = demoedBlue;
-                    }
-                }
-            }else if(d['players'][id].team == 1){
-                orangeMembers += 1;
-                if(orangeMembers == 1){
-                    if(d['players'][id].isDead == true){
-                        orangePlayer1.style.background = demoedOrange;
-                    }
-                }else if(orangeMembers == 2){
-                    if(d['players'][id].isDead == true){
-                        orangePlayer2.style.background = demoedOrange;
-                    }
-                }else if(orangeMembers == 3){
-                    if(d['players'][id].isDead == true){
-                        orangePlayer3.style.background = demoedOrange;
-                    }
-                }
-            }
-        });
+            });
+        }
 	});
 
     WsSubscribers.subscribe("game", "match_ended", (e) => {
+        let mainBg = document.getElementById("mainBg");
+        var randomInt;
+        var bgName;
+        randomInt = randomIntFromInterval(1, 15);
+        bgName = 'url("Images/' + randomInt + '.png")';
+        mainBg.style.backgroundImage = bgName;
+
         if(e['winner_team_num'] == 0){
             if(blueCount == 0){
               blue1.style.color = "#2ed8ff";
@@ -678,10 +573,8 @@ $(() => {
     WsSubscribers.subscribe("Scoreboard", "Names", (e) => {
         autoNames = e;
     });
-
 });
 
-function setProgress(percent) {
-  const offset = circumference - percent / 100 * circumference;
-  circle.style.strokeDashoffset = offset;
-}
+function randomIntFromInterval(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min)
+};

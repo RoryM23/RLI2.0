@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+  @import url('https://fonts.googleapis.com/css2?family=Quantico:ital,wght@1,700&display=swap');
+  </style>
+</head>
+<div>
+    <link href="CSS/Stats-Table.css" rel="stylesheet" />
+    <div class="stats-container" id="mainBg">
+        <div class="rlis-overlay-tourney-area">
+            <div class="rlis-overlay-tourney-top">
+                <div class="rlis-overlay-left-spacer"></div>
+                <div class="rlis-overlay-tourney-info-area">
+          <span class="rlis-overlay-tourney-text">
+            <span>RLIS SEASON 9</span>
+            <br />
+          </span>
+                </div>
+                <div class="rlis-overlay-right-spacer"></div>
+            </div>
+        </div>
+        <div class="rlis-overlay-overlay-top">
+            <div class="rlis-overlay-top-left-spacer">
+                <div class="rlis-overlay-blue-names">
+                </div>
+            </div>
+            <div class="rlis-overlay-scoreboard">
+                <div class="rlis-overlay-scoreboard-top">
+                    <div class="rlis-overlay-full-score-area">
+                        <div class="rlis-overlay-blue-scoreboard-area">
+                            <div class="rlis-overlay-blue-spacer"></div>
+                            <div class="rlis-overlay-blue-logo-area">
+                                <img src="Images/rli_logo.png" style="height:75px; width:auto;" id="blueImg"/>
+                            </div>
+                            <div class="rlis-overlay-blue-team-info-area">
+                                <div class="rlis-overlay-blue-team-name-area">
+                  <span class="rlis-overlay-blue-team-name" id="blueTeamName">
+                    <span>Team Name</span>
+                    <br />
+                  </span>
+                                </div>
+                                <div class="rlis-overlay-blue-series-score">
+                                    <span class="rlis-overlay-blue-g1"id="blueG1">__</span>
+                                    <span class="rlis-overlay-blue-g2"id="blueG2">__</span>
+                                    <span class="rlis-overlay-blue-g3"id="blueG3">__</span>
+                                    <span class="rlis-overlay-blue-g4"id="blueG4">__</span>
+                                    <span class="rlis-overlay-blue-g5"id="blueG5">__</span>
+                                </div>
+                            </div>
+                            <div class="rlis-overlay-blue-score-area">
+                                <span class="rlis-overlay-blue-score"id="blueScore">0</span>
+                            </div>
+                        </div>
+                        <div class="rlis-overlay-timer-area">
+                            <span class="rlis-overlay-timer"id="timer">5:00</span>
+                        </div>
+                        <div class="rlis-overlay-orange-scoreboard-area">
+                            <div class="rlis-overlay-orange-score-area">
+                                <span class="rlis-overlay-orange-score"id="orangeScore">0</span>
+                            </div>
+                            <div class="rlis-overlay-orange-team-info-area">
+                                <div class="rlis-overlay-orange-team-name-area">
+                  <span class="rlis-overlay-orange-team-name" id="orangeTeamName">
+                    <span>Team Name</span>
+                    <br />
+                  </span>
+                                </div>
+                                <div class="rlis-overlay-orange-series-score">
+                                    <span class="rlis-overlay-orange-g1"id="orangeG1">__</span>
+                                    <span class="rlis-overlay-orange-g2"id="orangeG2">__</span>
+                                    <span class="rlis-overlay-orange-g3"id="orangeG3">__</span>
+                                    <span class="rlis-overlay-orange-g4"id="orangeG4">__</span>
+                                    <span class="rlis-overlay-orange-g5"id="orangeG5">__</span>
+                                </div>
+                            </div>
+                            <div class="rlis-overlay-orange-logo-area">
+                                <img src="Images/rli_logo.png" style="height:75px; width:auto;" id="orangeImg"/>
+                            </div>
+                            <div class="rlis-overlay-orange-spacer"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="rlis-overlay-scoreboard-bottom">
+                    <div class="rlis-overlay-bottom-left-spacer"></div>
+                    <div class="rlis-overlay-info-area">
+                        <div class="rlis-overlay-info-area-left">
+              <span class="rlis-overlay-info-left-text"id="gameText">
+                <span>Game 1</span>
+                <br />
+              </span>
+                        </div>
+                        <div class="rlis-overlay-info-area-middle">
+              <span class="rlis-overlay-stage-text">
+                <span>GROUP STAGE</span>
+                <br />
+              </span>
+                        </div>
+                        <div class="rlis-overlay-info-area-right">
+                            <span class="rlis-overlay-info-right-text">BO9</span>
+                        </div>
+                    </div>
+                    <div class="rlis-overlay-bottom-right-spacer"></div>
+                </div>
+            </div>
+            <div class="rlis-overlay-top-right-spacer">
+                <div class="rlis-overlay-orange-names">
+                </div>
+            </div>
+        </div>
+        <div class="stats-container01"></div>
+        <div class="stats-container02">
+            <div class="stats-container03"></div>
+            <div class="stats-blue-player-area-3" id="bluePlayer3">
+                <div class="stats-blue-name-area-3">
+                    <span class="stats-blue-name-text-3">Player</span>
+                </div>
+                <div class="stats-blue-score-area-3">
+                    <span class="stats-blue-score-text-3">0</span>
+                </div>
+                <div class="stats-blue-goals-area-3">
+                    <span class="stats-blue-goals-text-3">0</span>
+                </div>
+                <div class="stats-blue-shots-area-3">
+                    <span class="stats-blue-shots-text-3">0</span>
+                </div>
+                <div class="stats-blue-assists-area-3">
+                    <span class="stats-blue-assists-text-3">0</span>
+                </div>
+                <div class="stats-blue-saves-area-3">
+                    <span class="stats-text08">0</span>
+                </div>
+                <div class="stats-blue-demos-area-3">
+                    <span class="stats-blue-demos-text-3">0</span>
+                </div>
+            </div>
+            <div class="stats-blue-player-area-2" id="bluePlayer2">
+                <div class="stats-blue-name-area-2">
+                    <span class="stats-blue-name-text-2">Player</span>
+                </div>
+                <div class="stats-blue-score-area-2">
+                    <span class="stats-blue-score-text-2">0</span>
+                </div>
+                <div class="stats-blue-goals-area-2">
+                    <span class="stats-blue-goals-text-2">0</span>
+                </div>
+                <div class="stats-blue-shots-area-2">
+                    <span class="stats-blue-shots-text-2">0</span>
+                </div>
+                <div class="stats-blue-assists-area-2">
+                    <span class="stats-blue-assists-text-2">0</span>
+                </div>
+                <div class="stats-blue-saves-area-2">
+                    <span class="stats-blue-saves-text-2">0</span>
+                </div>
+                <div class="stats-blue-demos-area-2">
+                    <span class="stats-blue-demos-text-2">0</span>
+                </div>
+            </div>
+            <div class="stats-blue-player-area-1" id="bluePlayer1">
+                <div class="stats-blue-name-area-1">
+                    <span class="stats-blue-name-text-1">Player</span>
+                </div>
+                <div class="stats-blue-score-area-1">
+                    <span class="stats-blue-score-text-1">0</span>
+                </div>
+                <div class="stats-blue-goals-area-1">
+                    <span class="stats-blue-goals-text-1">0</span>
+                </div>
+                <div class="stats-blue-shots-area-1">
+                    <span class="stats-blue-shots-text-1">0</span>
+                </div>
+                <div class="stats-blue-assists-area-1">
+                    <span class="stats-blue-assists-text-1">0</span>
+                </div>
+                <div class="stats-blue-saves-area-1">
+                    <span class="stats-blue-saves-text-1">0</span>
+                </div>
+                <div class="stats-blue-demos-area-1">
+                    <span class="stats-blue-demos-text-1">0</span>
+                </div>
+            </div>
+            <div class="stats-container04">
+                <div class="stats-container05"></div>
+                <div class="stats-container06">
+                    <span class="stats-text09">SCORE</span>
+                </div>
+                <div class="stats-container07">
+                    <span class="stats-text10">GOALS</span>
+                </div>
+                <div class="stats-container08">
+                    <span class="stats-text11">SHOTS</span>
+                </div>
+                <div class="stats-container09">
+                    <span class="stats-text12">ASSISTS</span>
+                </div>
+                <div class="stats-container10">
+                    <span class="stats-text13">SAVES</span>
+                </div>
+                <div class="stats-container11">
+                    <span class="stats-text14">DEMOS</span>
+                </div>
+                <div class="stats-container12"></div>
+            </div>
+            <div class="stats-orange-player-area-1" id="orangePlayer1">
+                <div class="stats-orange-name-area-1">
+                    <span class="stats-orange-name-text-1">Player</span>
+                </div>
+                <div class="stats-orange-score-area-1">
+                    <span class="stats-orange-score-text-1">0</span>
+                </div>
+                <div class="stats-orange-goals-area-1">
+                    <span class="stats-orange-goals-text-1">0</span>
+                </div>
+                <div class="stats-orange-shots-area-1">
+                    <span class="stats-orange-shots-text-1">0</span>
+                </div>
+                <div class="stats-orange-assists-area-1">
+                    <span class="stats-orange-assists-text-1">0</span>
+                </div>
+                <div class="stats-orange-saves-area-1">
+                    <span class="stats-orange-saves-text-1">0</span>
+                </div>
+                <div class="stats-orange-demos-area-1">
+                    <span class="stats-orange-demos-text-1">0</span>
+                </div>
+            </div>
+            <div class="stats-orange-player-area-2" id="orangePlayer2">
+                <div class="stats-orange-name-area-2">
+                    <span class="stats-orange-name-text-2">Player</span>
+                </div>
+                <div class="stats-orange-score-area-2">
+                    <span class="stats-orange-score-text-2">0</span>
+                </div>
+                <div class="stats-orange-goals-area-2">
+                    <span class="stats-orange-goals-text-2">0</span>
+                </div>
+                <div class="stats-orange-shots-area-2">
+                    <span class="stats-orange-shots-text-2">0</span>
+                </div>
+                <div class="stats-orange-assists-area-2">
+                    <span class="stats-orange-assists-text-2">0</span>
+                </div>
+                <div class="stats-orange-saves-area-2">
+                    <span class="stats-orange-saves-text-2">0</span>
+                </div>
+                <div class="stats-orange-demos-area-2">
+                    <span class="stats-orange-demos-text-2">0</span>
+                </div>
+            </div>
+            <div class="stats-orange-player-area-3" id="orangePlayer3">
+                <div class="stats-orange-name-area-3">
+                    <span class="stats-orange-name-text-3">Player</span>
+                </div>
+                <div class="stats-orange-score-area-3">
+                    <span class="stats-orange-score-text-3">0</span>
+                </div>
+                <div class="stats-orange-goals-area-3">
+                    <span class="stats-orange-goals-text-3">0</span>
+                </div>
+                <div class="stats-orange-shots-area-3">
+                    <span class="stats-orange-shots-text-3">0</span>
+                </div>
+                <div class="stats-orange-assists-area-3">
+                    <span class="stats-orange-assists-text-3">0</span>
+                </div>
+                <div class="stats-orange-saves-area-3">
+                    <span class="stats-orange-saves-text-3">0</span>
+                </div>
+                <div class="stats-orange-demos-area-3">
+                    <span class="stats-orange-demos-text-3">0</span>
+                </div>
+            </div>
+            <div class="stats-container13"></div>
+        </div>
+        <div class="stats-container14"></div>
+    </div>
+</div>
+
+<script src="JS/Stats-Table.js"></script>
+</html>

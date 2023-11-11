@@ -124,11 +124,8 @@ const WsSubscribers = {
 
 
 
+
 //EDIT FROM HERE DOWN. DO NOT TOUCH THE ABOVE
-
-
-
-
 
 
 
@@ -153,6 +150,9 @@ var gameNumber = 1;
 var gameText = document.getElementById('gameText');
 var blueCount = 0;
 var orangeCount = 0;
+var assistBoolean = false;
+var replayBanner = document.getElementById("replayBanner");
+var assistArea = document.getElementById("assistArea")
 
 var blueName = document.getElementById('blueTeamName');
 var blueScore = document.getElementById('blueScore');
@@ -171,12 +171,6 @@ var Orange2 = document.getElementById('orangeG2');
 var Orange3 = document.getElementById('orangeG3');
 var Orange4 = document.getElementById('orangeG4');
 var Orange5 = document.getElementById('orangeG5');
-
-const circle = document.querySelector('.progress-ring__circle');
-const radius = circle.r.baseVal.value;
-const circumference = radius * 2 * Math.PI;
-circle.style.strokeDasharray = `${circumference} ${circumference}`;
-circle.style.strokeDashoffset = circumference;
 
 $(() => {
 	WsSubscribers.init(49322, true)
@@ -234,16 +228,6 @@ $(() => {
 		let testActiveBlue = "linear-gradient(to left, #bbbbbb, #525252)";
 		let testActiveOrange = "linear-gradient(to left, #ae5600, #f77400)";
 
-        let playerSpectatingArea = document.getElementById("playerSpectatingArea");
-		let playerSpectatingName = document.getElementById("playerSpectatingName");
-		let playerSpectatingScore = document.getElementById("playerSpectatingScore");
-		let playerSpectatingGoals = document.getElementById("playerSpectatingGoals");
-		let playerSpectatingAssists = document.getElementById("playerSpectatingAssists");
-        let playerSpectatingShots = document.getElementById("playerSpectatingShots");
-        let playerSpectatingSaves = document.getElementById("playerSpectatingSaves");
-        let playerSpectatingBoost = document.getElementById("playerSpectatingBoost");
-        let playerSpectatingBoostMeter = document.getElementById("boostMeter");
-
 		Object.keys(d['players']).forEach((id) => {
 		    if(d['players'][id].team == 0){
 		        blueMembers += 1;
@@ -268,16 +252,6 @@ $(() => {
                         bluePlayer3.style.background = inactiveBlue;
                         bluePlayer2.style.background = inactiveBlue;
 		            }
-		            playerSpectatingName.innerHTML = d['players'][id].name;
-		            playerSpectatingGoals.innerHTML = d['players'][id].goals;
-		            playerSpectatingAssists.innerHTML = d['players'][id].assists;
-		            playerSpectatingScore.innerHTML = d['players'][id].score;
-		            playerSpectatingShots.innerHTML = d['players'][id].shots;
-		            playerSpectatingSaves.innerHTML = d['players'][id].saves;
-		            playerSpectatingBoost.innerHTML = d['players'][id].boost;
-		            setProgress(d['players'][id].boost);
-		            playerSpectatingArea.style.background = inactiveBlue;
-		            playerSpectatingBoostMeter.style.fill = "url(#blueGradient)";
 		        }
 
 		        if(blueMembers == 1){
@@ -311,16 +285,6 @@ $(() => {
                         orangePlayer2.style.background = inactiveOrange;
                         orangePlayer3.style.background = inactiveOrange;
                     }
-                    playerSpectatingName.innerHTML = d['players'][id].name;
-                    playerSpectatingGoals.innerHTML = d['players'][id].goals;
-                    playerSpectatingAssists.innerHTML = d['players'][id].assists;
-                    playerSpectatingScore.innerHTML = d['players'][id].score;
-                    playerSpectatingShots.innerHTML = d['players'][id].shots;
-                    playerSpectatingSaves.innerHTML = d['players'][id].saves;
-                    playerSpectatingBoost.innerHTML = d['players'][id].boost;
-                    setProgress(d['players'][id].boost);
-                    playerSpectatingArea.style.background = inactiveOrange;
-                    playerSpectatingBoostMeter.style.fill = "url(#orangeGradient)";
                 }
 
                 if(orangeMembers == 1){
@@ -407,6 +371,39 @@ $(() => {
            }
         }
         gameNumber++;
+    });
+
+    WsSubscribers.subscribe("game", "goal_scored", (e) => {
+          var scorer = " " + e['scorer']['name'];
+          $(".rlis-overlay-container .overlay-overlay-bottom .overlay-replay-banner .overlay-replay-stats-area .overlay-scored-by-area .overlay-scored-by-player-name").text(scorer);
+          if(e['scorer']['teamnum'] == 0){
+            var gradientAmount = "linear-gradient(to top, #003576, #0000 85%)";
+            replayBanner.style.background = gradientAmount;
+          }else{
+            var gradientAmount = "linear-gradient(to top, #ae5600, #0000 85%)";
+            replayBanner.style.background = gradientAmount;
+          }
+          if(e['assister']['name'] == ""){
+            $(".rlis-overlay-container .overlay-overlay-bottom .overlay-replay-banner .overlay-replay-stats-area .overlay-assist-area .overlay-assist-player-name").text("None");
+            assistArea.style.visibility = "hidden";
+            assistBoolean = false;
+          }else{
+            var assister = " " + e['assister']['name'];
+            $(".rlis-overlay-container .overlay-overlay-bottom .overlay-replay-banner .overlay-replay-stats-area .overlay-assist-area .overlay-assist-player-name").text(assister);
+            assistBoolean = true;
+          }
+          var goalSpeed = " " +  Math.round(e['goalspeed']) + " KM/H";
+          $(".rlis-overlay-container .overlay-overlay-bottom .overlay-replay-banner .overlay-replay-stats-area .overlay-speed-area .overlay-speed-value").text(goalSpeed);
+    });
+
+    WsSubscribers.subscribe("game", "replay_start", (e) => {
+        if(assistBoolean == false){
+            assistArea.style.visibility = "hidden";
+        }
+    });
+
+    WsSubscribers.subscribe("game", "replay_end", (e) => {
+        assistArea.style.visibility = "visible";
     });
 
     WsSubscribers.subscribe("tournament", "abbrv", (e) => {
@@ -680,8 +677,3 @@ $(() => {
     });
 
 });
-
-function setProgress(percent) {
-  const offset = circumference - percent / 100 * circumference;
-  circle.style.strokeDashoffset = offset;
-}

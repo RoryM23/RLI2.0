@@ -7,7 +7,7 @@
   </style>
 </head>
 <div>
-  <link href="CSS/overlay.css" rel="stylesheet" />
+  <link href="CSS/replay.css" rel="stylesheet" />
   <div class="rlis-overlay-container">
     <div class="rlis-overlay-tourney-area">
       <div class="rlis-overlay-tourney-top">
@@ -138,73 +138,47 @@
       </div>
     </div>
     <div class="rlis-overlay-overlay-middle"></div>
-    <div class="rlis-overlay-overlay-bottom">
-      <div class="rlis-overlay-bottom-divider">
-        <div class="rlis-overlay-bottom-left">
-          <span class="wrapper">
-            <div class="rlis-overlay-stats-banner"id="playerSpectatingArea">
-              <div class="rlis-overlay-name-area">
-                <span class="rlis-overlay-name-text"id="playerSpectatingName">Name</span>
-              </div>
-              <div class="rlis-overlay-score-area">
-                <span class="rlis-overlay-score-text">Score: </span>
-                <span class="rlis-overlay-score-amount"id="playerSpectatingScore">0</span>
-              </div>
-              <div class="rlis-overlay-goals-area">
-                <span class="rlis-overlay-goals-text">Goals: </span>
-                <span class="rlis-overlay-goals-amount"id="playerSpectatingGoals">0</span>
-              </div>
-              <div class="rlis-overlay-assists-area">
-                <span class="rlis-overlay-assists-text">Assists: </span>
-                <span class="rlis-overlay-assists-amount"id="playerSpectatingAssists">0</span>
-              </div>
-              <div class="rlis-overlay-shots-area">
-                <span class="rlis-overlay-shots-text">Shots: </span>
-                <span class="rlis-overlay-shots-amount"id="playerSpectatingShots">0</span>
-              </div>
-              <div class="rlis-overlay-saves-area">
-                <span class="rlis-overlay-saves-text">Saves: </span>
-                <span class="rlis-overlay-saves-amount"id="playerSpectatingSaves">0</span>
-              </div>
-            </div>
-          </span>
+    <div class="overlay-overlay-bottom">
+      <div class="overlay-replay-banner" id="replayBanner">
+        <div class="overlay-replay-logo-area">
+          <span class="overlay-replay-logo-text">REPLAY</span>
         </div>
-        <div class="rlis-overlay-bottom-right">
-          <div class="rlis-overlay-boost-meter">
-            <svg
-                    class="progress-ring"
-                    height="195"
-                    width="195"
-            >
-              <defs>
-                <linearGradient id="blueGradient">
-                  <stop class="colour1" offset="0%" stop-color="rgba(0,122,216)"/>
-                  <stop class="colour2" offset="90%" stop-color="rgba(0,53,118)"/>
-                </linearGradient>
-                <linearGradient id="orangeGradient">
-                  <stop class="colour3" offset="0%" stop-color="rgba(247,116,0)"/>
-                  <stop class="colour4" offset="90%" stop-color="rgba(174,86,0)"/>
-                </linearGradient>
-              </defs>
-              <circle
-                      class="progress-ring__circle"
-                      stroke="rgb(255, 165, 0)"
-                      stroke-width="5"
-                      fill="url(#blueGradient)"
-                      r="80"
-                      cx="97.5"
-                      cy="97.5"
-                      id="boostMeter"
-              />
-              <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-style="italic" font-family="Quantico" font-weight="700" font-size="30px" fill="white" id="playerSpectatingBoost">50</text>
-            </svg>
+        <div class="overlay-replay-stats-area">
+          <div class="overlay-scored-by-area">
+                        <span class="overlay-scored-by-text">
+                          <span>SCORED BY: </span>
+                          <br />
+                        </span>
+            <span class="overlay-scored-by-player-name">
+                          <span>PLAYER NAME</span>
+                          <br />
+                        </span>
           </div>
-          <div class="rlis-overlay-bootom-right-spacer"></div>
+          <div class="overlay-speed-area">
+                        <span class="overlay-speed-text">
+                          <span>SPEED: </span>
+                          <br />
+                        </span>
+            <span class="overlay-speed-value">
+                          <span>SPEED KM/H </span>
+                          <br />
+                        </span>
+          </div>
+          <div class="overlay-assist-area" id="assistArea">
+                        <span class="overlay-assist-text">
+                          <span>ASSIST: </span>
+                          <br />
+                        </span>
+            <span class="overlay-assist-player-name">
+                          <span>PLAYER NAME</span>
+                          <br />
+                        </span>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<script src="JS/RLIS-Overlay.js"></script>
+<script src="JS/replay.js"></script>
 </html>
