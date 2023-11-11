@@ -337,6 +337,8 @@ $(() => {
             Orange3.style.color = "#000";
             Orange4.style.color = "#000";
             Orange5.style.color = "#000";
+            gameNumber = 1;
+            gameText.innerHTML = ("GAME " + gameNumber);
     });
 
     WsSubscribers.subscribe("series", "bo3", (e) => {
@@ -364,6 +366,8 @@ $(() => {
             Orange3.style.color = "#000";
             Orange4.style.color = "#000";
             Orange5.style.color = "#000";
+            gameNumber = 1;
+            gameText.innerHTML = ("GAME " + gameNumber);
     });
 
     WsSubscribers.subscribe("series", "bo5", (e) => {
@@ -391,6 +395,8 @@ $(() => {
             Orange3.style.color = "#000";
             Orange4.style.color = "#000";
             Orange5.style.color = "#000";
+            gameNumber = 1;
+            gameText.innerHTML = ("GAME " + gameNumber);
     });
 
     WsSubscribers.subscribe("series", "bo7", (e) => {
@@ -418,6 +424,8 @@ $(() => {
             Orange3.style.color = "#000";
             Orange4.style.color = "#000";
             Orange5.style.color = "#000";
+            gameNumber = 1;
+            gameText.innerHTML = ("GAME " + gameNumber);
     });
 
     WsSubscribers.subscribe("series", "bo9", (e) => {
@@ -445,6 +453,8 @@ $(() => {
             Orange3.style.color = "#000";
             Orange4.style.color = "#000";
             Orange5.style.color = "#000";
+            gameNumber = 1;
+            gameText.innerHTML = ("GAME " + gameNumber);
     });
 
     WsSubscribers.subscribe("series", "BluePlus", (e) => {

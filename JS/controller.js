@@ -276,6 +276,8 @@ $(".controller-container .controller-general-info .controller-no-series-area .bu
         Orange4.style.color = "#000";
         Orange5.style.color = "#000";
         WsSubscribers.send("series", "none", i);
+        gameNumber = 1;
+        gameText.innerHTML = ("GAME " + gameNumber);
 });
 
 $(".controller-container .controller-general-info .controller-no-series-area .button01").click(function(){
@@ -304,6 +306,8 @@ $(".controller-container .controller-general-info .controller-no-series-area .bu
         Orange4.style.color = "#000";
         Orange5.style.color = "#000";
         WsSubscribers.send("series", "bo3", i);
+        gameNumber = 1;
+        gameText.innerHTML = ("GAME " + gameNumber);
 });
 
 $(".controller-container .controller-general-info .controller-no-series-area .button02").click(function(){
@@ -332,6 +336,8 @@ $(".controller-container .controller-general-info .controller-no-series-area .bu
         Orange4.style.color = "#000";
         Orange5.style.color = "#000";
         WsSubscribers.send("series", "bo5", i);
+        gameNumber = 1;
+        gameText.innerHTML = ("GAME " + gameNumber);
 });
 
 $(".controller-container .controller-general-info .controller-no-series-area .button03").click(function(){
@@ -360,6 +366,8 @@ $(".controller-container .controller-general-info .controller-no-series-area .bu
         Orange4.style.color = "#000";
         Orange5.style.color = "#000";
         WsSubscribers.send("series", "bo7", i);
+        gameNumber = 1;
+        gameText.innerHTML = ("GAME " + gameNumber);
 });
 
 $(".controller-container .controller-general-info .controller-no-series-area .button04").click(function(){
@@ -388,6 +396,8 @@ $(".controller-container .controller-general-info .controller-no-series-area .bu
         Orange4.style.color = "#000";
         Orange5.style.color = "#000";
         WsSubscribers.send("series", "bo9", i);
+        gameNumber = 1;
+        gameText.innerHTML = ("GAME " + gameNumber);
 });
 
 $(".controller-container .controller-overlay-body .controller-blue-controls .controller-container03 .controller-container05 .controller-button08").click(function(){
