@@ -580,6 +580,8 @@ $(() => {
           blue5.style.color = "#2ed8ff";
           blueCount = 5;
         }
+        gameNumber += 1;
+        gameText.innerHTML = ("GAME " + gameNumber);
     });
     WsSubscribers.subscribe("series", "BlueMinus", (e) => {
         if(blueCount == 5){
@@ -598,6 +600,8 @@ $(() => {
           blue1.style.color = "#000";
           blueCount = 0;
         }
+        gameNumber -= 1;
+        gameText.innerHTML = ("GAME " + gameNumber);
     });
     WsSubscribers.subscribe("series", "OrangePlus", (e) => {
         if(orangeCount == 0){
@@ -616,6 +620,8 @@ $(() => {
            Orange5.style.color = "#ffcd2e";
            orangeCount = 5;
        }
+       gameNumber += 1;
+       gameText.innerHTML = ("GAME " + gameNumber);
     });
     WsSubscribers.subscribe("series", "OrangeMinus", (e) => {
         if(orangeCount == 5){
@@ -634,6 +640,8 @@ $(() => {
           Orange1.style.color = "#000";
           orangeCount = 0;
         }
+        gameNumber -= 1;
+        gameText.innerHTML = ("GAME " + gameNumber);
     });
 
     WsSubscribers.subscribe("Team", "blueGiants", (e) => {

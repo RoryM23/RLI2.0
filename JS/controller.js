@@ -277,7 +277,7 @@ $(".controller-container .controller-general-info .controller-no-series-area .bu
         WsSubscribers.send("series", "none", i);
         gameNumber = 1;
         gameText.innerHTML = ("GAME " + gameNumber);
-        $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
+        $(".controller-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
 });
 
 $(".controller-container .controller-general-info .controller-no-series-area .button01").click(function(){
@@ -307,7 +307,7 @@ $(".controller-container .controller-general-info .controller-no-series-area .bu
         WsSubscribers.send("series", "bo3", i);
         gameNumber = 1;
         gameText.innerHTML = ("GAME " + gameNumber);
-        $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
+        $(".controller-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
 });
 
 $(".controller-container .controller-general-info .controller-no-series-area .button02").click(function(){
@@ -337,7 +337,7 @@ $(".controller-container .controller-general-info .controller-no-series-area .bu
         WsSubscribers.send("series", "bo5", i);
         gameNumber = 1;
         gameText.innerHTML = ("GAME " + gameNumber);
-        $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
+        $(".controller-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
 });
 
 $(".controller-container .controller-general-info .controller-no-series-area .button03").click(function(){
@@ -367,7 +367,7 @@ $(".controller-container .controller-general-info .controller-no-series-area .bu
         WsSubscribers.send("series", "bo7", i);
         gameNumber = 1;
         gameText.innerHTML = ("GAME " + gameNumber);
-        $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
+        $(".controller-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
 });
 
 $(".controller-container .controller-general-info .controller-no-series-area .button04").click(function(){
@@ -397,7 +397,7 @@ $(".controller-container .controller-general-info .controller-no-series-area .bu
         WsSubscribers.send("series", "bo9", i);
         gameNumber = 1;
         gameText.innerHTML = ("GAME " + gameNumber);
-        $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
+        $(".controller-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
 });
 
 $(".controller-container .controller-overlay-body .controller-blue-controls .controller-container03 .controller-container05 .controller-button08").click(function(){
@@ -418,6 +418,8 @@ $(".controller-container .controller-overlay-body .controller-blue-controls .con
       blue5.style.color = "#2ed8ff";
       blueCount = 5;
     }
+    gameNumber += 1;
+    gameText.innerHTML = ("GAME " + gameNumber);
     WsSubscribers.send("series", "BluePlus", i);
 });
 $(".controller-container .controller-overlay-body .controller-blue-controls .controller-container03 .controller-container05 .controller-button09").click(function(){
@@ -438,6 +440,8 @@ $(".controller-container .controller-overlay-body .controller-blue-controls .con
       blue1.style.color = "#000";
       blueCount = 0;
     }
+    gameNumber -= 1;
+    gameText.innerHTML = ("GAME " + gameNumber);
     WsSubscribers.send("series", "BlueMinus", i);
 });
 $(".controller-container .controller-overlay-body .controller-orange-controls .controller-container06 .controller-container08 .controller-button10").click(function(){
@@ -458,6 +462,8 @@ $(".controller-container .controller-overlay-body .controller-orange-controls .c
        Orange5.style.color = "#ffcd2e";
        orangeCount = 5;
    }
+   gameNumber += 1;
+   gameText.innerHTML = ("GAME " + gameNumber);
     WsSubscribers.send("series", "OrangePlus", i);
 });
 $(".controller-container .controller-overlay-body .controller-orange-controls .controller-container06 .controller-container08 .controller-button11").click(function(){
@@ -478,6 +484,8 @@ $(".controller-container .controller-overlay-body .controller-orange-controls .c
       Orange1.style.color = "#000";
       orangeCount = 0;
     }
+    gameNumber -= 1;
+    gameText.innerHTML = ("GAME " + gameNumber);
     WsSubscribers.send("series", "OrangeMinus", i);
 });
 

@@ -305,11 +305,11 @@ $(() => {
     });
 
     WsSubscribers.subscribe("tournament", "abbrv", (e) => {
-            $(".rlis-overlay-container .rlis-overlay-tourney-area .rlis-overlay-tourney-top .rlis-overlay-tourney-info-area .rlis-overlay-tourney-text").text(e);
+            $(".stats-container .rlis-overlay-tourney-area .rlis-overlay-tourney-top .rlis-overlay-tourney-info-area .rlis-overlay-tourney-text").text(e);
     });
 
     WsSubscribers.subscribe("tournament", "stage", (e) => {
-        $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-middle .rlis-overlay-stage-text").text(e);
+        $(".stats-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-middle .rlis-overlay-stage-text").text(e);
     });
 
     WsSubscribers.subscribe("series", "none", (e) => {
@@ -338,7 +338,7 @@ $(() => {
             Orange5.style.color = "#000";
             gameNumber = 1;
             gameText.innerHTML = ("GAME " + gameNumber);
-            $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
+            $(".stats-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
     });
 
     WsSubscribers.subscribe("series", "bo3", (e) => {
@@ -367,7 +367,7 @@ $(() => {
             Orange5.style.color = "#000";
             gameNumber = 1;
             gameText.innerHTML = ("GAME " + gameNumber);
-            $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
+            $(".stats-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
     });
 
     WsSubscribers.subscribe("series", "bo5", (e) => {
@@ -396,7 +396,7 @@ $(() => {
             Orange5.style.color = "#000";
             gameNumber = 1;
             gameText.innerHTML = ("GAME " + gameNumber);
-            $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
+            $(".stats-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
     });
 
     WsSubscribers.subscribe("series", "bo7", (e) => {
@@ -425,7 +425,7 @@ $(() => {
             Orange5.style.color = "#000";
             gameNumber = 1;
             gameText.innerHTML = ("GAME " + gameNumber);
-            $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
+            $(".stats-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
     });
 
     WsSubscribers.subscribe("series", "bo9", (e) => {
@@ -454,7 +454,7 @@ $(() => {
             Orange5.style.color = "#000";
             gameNumber = 1;
             gameText.innerHTML = ("GAME " + gameNumber);
-            $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
+            $(".stats-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
     });
 
     WsSubscribers.subscribe("series", "BluePlus", (e) => {
@@ -474,6 +474,8 @@ $(() => {
           blue5.style.color = "#2ed8ff";
           blueCount = 5;
         }
+        gameNumber += 1;
+        gameText.innerHTML = ("GAME " + gameNumber);
     });
     WsSubscribers.subscribe("series", "BlueMinus", (e) => {
         if(blueCount == 5){
@@ -492,6 +494,8 @@ $(() => {
           blue1.style.color = "#000";
           blueCount = 0;
         }
+        gameNumber -= 1;
+        gameText.innerHTML = ("GAME " + gameNumber);
     });
     WsSubscribers.subscribe("series", "OrangePlus", (e) => {
         if(orangeCount == 0){
@@ -510,6 +514,8 @@ $(() => {
            Orange5.style.color = "#ffcd2e";
            orangeCount = 5;
        }
+       gameNumber += 1;
+       gameText.innerHTML = ("GAME " + gameNumber);
     });
     WsSubscribers.subscribe("series", "OrangeMinus", (e) => {
         if(orangeCount == 5){
@@ -528,6 +534,8 @@ $(() => {
           Orange1.style.color = "#000";
           orangeCount = 0;
         }
+        gameNumber -= 1;
+        gameText.innerHTML = ("GAME " + gameNumber);
     });
 
     WsSubscribers.subscribe("Team", "blueGiants", (e) => {
