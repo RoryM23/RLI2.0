@@ -250,6 +250,34 @@ $(".controller-container .controller-general-info .controller-tourney-stage-area
         WsSubscribers.send("tournament", "stage", i);
 });
 
+$("#connect").click(function () {
+  var ip = document.getElementById("IP").value;
+  var port = document.getElementById("port").value;
+  var password = document.getElementById("password").value;
+
+  var info = {
+      ip:ip,
+      port:port,
+      password:password
+  };
+  async function connectToObs(){
+      await window.connectToObs();
+  }
+
+  window.connectToObs(ip, port, password);
+  WsSubscribers.send("obs", "connect", info);
+ 
+});
+
+
+$("#disconnect").click(function(){
+  async function disconnectObs(){
+      await window.disconnectObs();
+  }
+  window.disconnectObs()
+});
+
+
 $(".controller-container .controller-general-info .controller-no-series-area .button").click(function(){
         var i = "Show Match";
         blueCount = 0;

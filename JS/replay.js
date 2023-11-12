@@ -374,26 +374,31 @@ $(() => {
     });
 
     WsSubscribers.subscribe("game", "goal_scored", (e) => {
-          var scorer = " " + e['scorer']['name'];
-          $(".rlis-overlay-container .overlay-overlay-bottom .overlay-replay-banner .overlay-replay-stats-area .overlay-scored-by-area .overlay-scored-by-player-name").text(scorer);
-          if(e['scorer']['teamnum'] == 0){
-            var gradientAmount = "linear-gradient(to top, #003576, #0000 85%)";
-            replayBanner.style.background = gradientAmount;
-          }else{
-            var gradientAmount = "linear-gradient(to top, #ae5600, #0000 85%)";
-            replayBanner.style.background = gradientAmount;
-          }
-          if(e['assister']['name'] == ""){
-            $(".rlis-overlay-container .overlay-overlay-bottom .overlay-replay-banner .overlay-replay-stats-area .overlay-assist-area .overlay-assist-player-name").text("None");
-            assistArea.style.visibility = "hidden";
-            assistBoolean = false;
-          }else{
-            var assister = " " + e['assister']['name'];
-            $(".rlis-overlay-container .overlay-overlay-bottom .overlay-replay-banner .overlay-replay-stats-area .overlay-assist-area .overlay-assist-player-name").text(assister);
-            assistBoolean = true;
-          }
-          var goalSpeed = " " +  Math.round(e['goalspeed']) + " KM/H";
-          $(".rlis-overlay-container .overlay-overlay-bottom .overlay-replay-banner .overlay-replay-stats-area .overlay-speed-area .overlay-speed-value").text(goalSpeed);
+        var scorer = " " + e['scorer']['name'];
+        $(".rlis-overlay-container .overlay-overlay-bottom .overlay-replay-banner .overlay-replay-stats-area .overlay-scored-by-area .overlay-scored-by-player-name").text(scorer);
+        if(e['scorer']['teamnum'] == 0){
+        var gradientAmount = "linear-gradient(to top, #003576, #0000 85%)";
+        replayBanner.style.background = gradientAmount;
+        }else{
+        var gradientAmount = "linear-gradient(to top, #ae5600, #0000 85%)";
+        replayBanner.style.background = gradientAmount;
+        }
+        if(e['assister']['name'] == ""){
+        $(".rlis-overlay-container .overlay-overlay-bottom .overlay-replay-banner .overlay-replay-stats-area .overlay-assist-area .overlay-assist-player-name").text("None");
+        assistArea.style.visibility = "hidden";
+        assistBoolean = false;
+        }else{
+        var assister = " " + e['assister']['name'];
+        $(".rlis-overlay-container .overlay-overlay-bottom .overlay-replay-banner .overlay-replay-stats-area .overlay-assist-area .overlay-assist-player-name").text(assister);
+        assistBoolean = true;
+        }
+        var goalSpeed = " " +  Math.round(e['goalspeed']) + " KM/H";
+        $(".rlis-overlay-container .overlay-overlay-bottom .overlay-replay-banner .overlay-replay-stats-area .overlay-speed-area .overlay-speed-value").text(goalSpeed);
+
+        async function obsSceneChange() {
+            await window.changeScene('Replay');
+        }
+        obsSceneChange();
     });
 
     WsSubscribers.subscribe("game", "replay_start", (e) => {
@@ -404,8 +409,26 @@ $(() => {
 
     WsSubscribers.subscribe("game", "replay_end", (e) => {
         assistArea.style.visibility = "visible";
+        async function obsSceneChange() {
+            await window.changeScene('Gameplay');
+        }
+        obsSceneChange();
     });
 
+    WsSubscribers.subscribe("obs", "connect", (e) => { // connect to obs websocket with info from control panel
+        async function connectToObs(){
+            await window.connectToObs();
+        }
+        window.connectToObs(e.ip, e.port, e.password);
+    });
+
+    WsSubscribers.subscribe("obs", "disconnect", (e) => { // disconnect from obs
+        async function disconnectObs(){
+            await window.disconnectObs();
+        }
+        window.disconnectObs();
+    });
+    
     WsSubscribers.subscribe("tournament", "abbrv", (e) => {
             $(".rlis-overlay-container .rlis-overlay-tourney-area .rlis-overlay-tourney-top .rlis-overlay-tourney-info-area .rlis-overlay-tourney-text").text(e);
     });
