@@ -3,7 +3,7 @@ window.connectToObs = async function(ip, port, password) {
     try {
         const { obsWebSocketVersion, negotiatedRpcVersion } = await obs.connect(`wss://${ip}:${port}`, `${password}`, { rpcVersion: 1 });
         console.log(`Connected to server ${obsWebSocketVersion} (using RPC ${negotiatedRpcVersion})`);
-        console.log()
+        console.log();
     } catch (error) {
         console.error('Failed to connect', error.code, error.message);
     }
