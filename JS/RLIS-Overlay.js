@@ -458,6 +458,7 @@ $(() => {
     });
 
     WsSubscribers.subscribe("obs", "connect", (e) => { // connect to obs websocket with info from control panel
+        console.log('test from rlis overlay');
         async function connectToObs(){
             await window.connectToObs();
         }
