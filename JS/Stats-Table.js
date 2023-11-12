@@ -208,8 +208,8 @@ $(() => {
         let orangePlayer1 = document.getElementById("orangePlayer1");
         let orangePlayer2 = document.getElementById("orangePlayer2");
         let orangePlayer3 = document.getElementById("orangePlayer3");
-        /*
-        if(d['game']['hasWinner'] == false){
+
+        if(d['game']['hasWinner'] == false && timeLeft == 280){
             orangePlayer1.style.visibility = 'hidden';
             orangePlayer2.style.visibility = 'hidden';
             orangePlayer3.style.visibility = 'hidden';
@@ -217,7 +217,7 @@ $(() => {
             bluePlayer2.style.visibility = 'hidden';
             bluePlayer3.style.visibility = 'hidden';
         }
-        */
+
 
 		var blueMembers = 0;
 		var orangeMembers = 0;

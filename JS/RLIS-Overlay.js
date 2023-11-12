@@ -153,6 +153,7 @@ var gameNumber = 1;
 var gameText = document.getElementById('gameText');
 var blueCount = 0;
 var orangeCount = 0;
+var specInfo = document.getElementById("specInfo");
 
 var blueName = document.getElementById('blueTeamName');
 var blueScore = document.getElementById('blueScore');
@@ -247,6 +248,10 @@ $(() => {
 		Object.keys(d['players']).forEach((id) => {
 		    if(d['players'][id].team == 0){
 		        blueMembers += 1;
+		        if(d['game']['isReplay'] == false){
+                    let blueSpectating = document.getElementById("bluePlayerName" + blueMembers);
+                    blueSpectating.style.visibility = 'visible';
+                }
 
 		        var gradientAmount = "linear-gradient(to left, #2c2c2c " + (100 - d['players'][id].boost) + "%, #ffa500 0%, #e09100)";
 		        $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-top-left-spacer .rlis-overlay-blue-names .rlis-overlay-blue-name-area" + blueMembers + " .rlis-overlay-blue-name-text" + blueMembers).text(d['players'][id].name);
@@ -278,7 +283,10 @@ $(() => {
 		            setProgress(d['players'][id].boost);
 		            playerSpectatingArea.style.background = inactiveBlue;
 		            playerSpectatingBoostMeter.style.fill = "url(#blueGradient)";
-		        }
+                    if(d['game']['isReplay'] == false){
+                         specInfo.style.visibility = 'visible';
+                     }
+                 }
 
 		        if(blueMembers == 1){
                     bluePlayerBoost1.style.background = gradientAmount;
@@ -290,6 +298,10 @@ $(() => {
 
 		    }else if(d['players'][id].team == 1){
                 orangeMembers += 1;
+                if(d['game']['isReplay'] == false){
+                    let orangeSpectating = document.getElementById("orangePlayerName" + orangeMembers);
+                    orangeSpectating.style.visibility = 'visible';
+                }
 
                 var gradientAmount = "linear-gradient(to right, #2c2c2c " + (100 - d['players'][id].boost) + "%, #ffa500 0%, #e09100)";
                 $(".rlis-overlay-container .rlis-overlay-overlay-top .rlis-overlay-top-right-spacer .rlis-overlay-orange-names .rlis-overlay-orange-name-area" + orangeMembers + " .rlis-overlay-orange-name-text" + orangeMembers).text(d['players'][id].name);
@@ -321,6 +333,9 @@ $(() => {
                     setProgress(d['players'][id].boost);
                     playerSpectatingArea.style.background = inactiveOrange;
                     playerSpectatingBoostMeter.style.fill = "url(#orangeGradient)";
+                     if(d['game']['isReplay'] == false){
+                         specInfo.style.visibility = 'visible';
+                     }
                 }
 
                 if(orangeMembers == 1){
@@ -331,6 +346,25 @@ $(() => {
                     orangePlayerBoost3.style.background = gradientAmount;
                 }
 		    }
+
+		    if(d['game']['isReplay'] == true){
+                orangePlayer1.style.visibility = 'hidden';
+                orangePlayer2.style.visibility = 'hidden';
+                orangePlayer3.style.visibility = 'hidden';
+                bluePlayer1.style.visibility = 'hidden';
+                bluePlayer2.style.visibility = 'hidden';
+                bluePlayer3.style.visibility = 'hidden';
+                specInfo.style.visibility = 'hidden';
+            }
+            if(d['game']['hasWinner'] == true){
+                orangePlayer1.style.visibility = 'hidden';
+                orangePlayer2.style.visibility = 'hidden';
+                orangePlayer3.style.visibility = 'hidden';
+                bluePlayer1.style.visibility = 'hidden';
+                bluePlayer2.style.visibility = 'hidden';
+                bluePlayer3.style.visibility = 'hidden';
+                specInfo.style.visibility = 'hidden';
+            }
         });
 
         blueMembers = 0;
