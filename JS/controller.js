@@ -147,6 +147,7 @@ var gameNumber = 1;
 var gameText = document.getElementById('gameText');
 var blueCount = 0;
 var orangeCount = 0;
+var connectCounter = 0;
 
 var blueName = document.getElementById('blueTeamName');
 var blueScore = document.getElementById('blueScore');
@@ -236,6 +237,15 @@ $(() => {
             gameNumber++;
         });
 
+        WsSubscribers.subscribe("obs", "disconnect", (e) => {
+            connectCounter -= 1;
+            document.getElementById("connectedNum").innerHTML = (connectCounter + '/4 Connected');
+        });
+
+        WsSubscribers.subscribe("obs", "connected", (e) => {
+            connectCounter += 1;
+            document.getElementById("connectedNum").innerHTML = (connectCounter + '/4 Connected');
+        });
 });
 
 $(".controller-container .controller-general-info .controller-tourney-abbrv-area .controller-button").click(function(){
@@ -266,7 +276,8 @@ $("#connect").click(function () {
 
   window.connectToObs(ip, port, password);
   WsSubscribers.send("obs", "connect", info);
- 
+  connectCounter += 1;
+  document.getElementById("authText").innerHTML = ('Connected');
 });
 
 
@@ -275,6 +286,7 @@ $("#disconnect").click(function(){
       await window.disconnectObs();
   }
   window.disconnectObs()
+  document.getElementById("authText").innerHTML = ('Disconnected');
 });
 
 

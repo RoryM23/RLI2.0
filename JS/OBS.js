@@ -4,6 +4,7 @@ window.connectToObs = async function(ip, port, password) {
         const { obsWebSocketVersion, negotiatedRpcVersion } = await obs.connect(`ws://${ip}:${port}`, `${password}`, { rpcVersion: 1 });
         console.log(`Connected to server ${obsWebSocketVersion} (using RPC ${negotiatedRpcVersion})`);
         console.log();
+        document.getElementById("authText").innerHTML = ('Connected');
     } catch (error) {
         console.error('Failed to connect', error.code, error.message);
     }
@@ -32,6 +33,7 @@ window.disconnectObs = async function() {
     try {
         await obs.disconnect();
         console.log('Disconnected from OBS');
+        document.getElementById("authText").innerHTML = ('Disconnected');
     } catch (error) {
         console.error('Failed to disconnect', error.code, error.message);
     }

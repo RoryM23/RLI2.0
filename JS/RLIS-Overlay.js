@@ -154,6 +154,7 @@ var gameText = document.getElementById('gameText');
 var blueCount = 0;
 var orangeCount = 0;
 var specInfo = document.getElementById("specInfo");
+var connected = false;
 
 var blueName = document.getElementById('blueTeamName');
 var blueScore = document.getElementById('blueScore');
@@ -463,6 +464,8 @@ $(() => {
             await window.connectToObs();
         }
         window.connectToObs(e.ip, e.port, e.password);
+        connected == true;
+        WsSubscribers.send("obs", "connected", connected);
     });
 
     WsSubscribers.subscribe("obs", "disconnect", (e) => { // disconnect from obs
@@ -470,6 +473,8 @@ $(() => {
             await window.disconnectObs();
         }
         window.disconnectObs();
+        connected == false;
+        WsSubscribers.send("obs", "disconnected", connected);
     });
 
     WsSubscribers.subscribe("tournament", "abbrv", (e) => {
