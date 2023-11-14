@@ -154,6 +154,7 @@ var assistBoolean = false;
 var replayBanner = document.getElementById("replayBanner");
 var assistArea = document.getElementById("assistArea");
 var connected = false;
+var timeLeft = 0;
 
 var blueName = document.getElementById('blueTeamName');
 var blueScore = document.getElementById('blueScore');
@@ -190,7 +191,7 @@ $(() => {
             orangeImg.src = "Images/rli_logo.png";
         }
 
-		var timeLeft = parseInt(d['game']['time_seconds']);
+		timeLeft = parseInt(d['game']['time_seconds']);
 		var m = Math.floor(timeLeft/60);
 		var s = (timeLeft - (m*60));
 		if(s.toString().length < 2){
