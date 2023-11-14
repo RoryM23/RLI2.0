@@ -235,17 +235,55 @@ $(() => {
                }
             }
             gameNumber++;
-        });
+  });
 
-        WsSubscribers.subscribe("obs", "disconnect", (e) => {
-            connectCounter -= 1;
-            document.getElementById("connectedNum").innerHTML = (connectCounter + '/4 Connected');
-        });
+  WsSubscribers.subscribe("obs", "disconnect", (e) => {
+      connectCounter -= 1;
+      document.getElementById("connectedNum").innerHTML = (connectCounter + '/4 Connected');
+  });
 
-        WsSubscribers.subscribe("obs", "connected", (e) => {
-            connectCounter += 1;
-            document.getElementById("connectedNum").innerHTML = (connectCounter + '/4 Connected');
-        });
+  WsSubscribers.subscribe("obs", "connected", (e) => {
+      connectCounter += 1;
+      document.getElementById("connectedNum").innerHTML = (connectCounter + '/4 Connected');
+  });
+
+  WsSubscribers.subscribe("game", "pre_countdown_begin", (e) => {
+    async function startOfGameSceneChange() {
+        await window.changeScene('Gameplay');
+    }
+    startOfGameSceneChange();
+  });
+
+  WsSubscribers.subscribe("game", "podium_start", (e) => {
+      async function getScene(){
+        await window.getSceneInfo();
+      }
+      let currentScene = getScene();
+      if (!currentScene){
+        async function endOfGameSceneChange() {
+          await window.changeScene('Scoreboard');
+      }
+      endOfGameSceneChange();
+      }
+  });
+
+  WsSubscribers.subscribe("game", "replay_start", (e) => {
+    async function obsSceneChange() {
+        await window.changeScene('Replay');
+    }
+    obsSceneChange();
+  });
+
+  WsSubscribers.subscribe("game", "replay_end", (e) => {
+    let scene = 'Gameplay';
+    if (timer == 0){
+      scene = 'Scoreboard'
+    }
+    async function obsSceneChange() {
+        await window.changeScene(scene);
+    }
+    obsSceneChange();
+  });
 });
 
 $(".controller-container .controller-general-info .controller-tourney-abbrv-area .controller-button").click(function(){

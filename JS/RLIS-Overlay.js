@@ -444,39 +444,6 @@ $(() => {
         gameNumber++;
     });
 
-    WsSubscribers.subscribe("game", "pre_countdown_begin", (e) => {
-        async function startOfGameSceneChange() {
-            await window.changeScene('Gameplay');
-        }
-        startOfGameSceneChange();
-    })
-
-    WsSubscribers.subscribe("game", "podium_start", (e) => {
-        async function endOfGameSceneChange() {
-            await window.changeScene('Scoreboard');
-        }
-        endOfGameSceneChange();
-    });
-
-    WsSubscribers.subscribe("obs", "connect", (e) => { // connect to obs websocket with info from control panel
-        console.log('test from rlis overlay');
-        async function connectToObs(){
-            await window.connectToObs();
-        }
-        window.connectToObs(e.ip, e.port, e.password);
-        connected == true;
-        WsSubscribers.send("obs", "connected", connected);
-    });
-
-    WsSubscribers.subscribe("obs", "disconnect", (e) => { // disconnect from obs
-        async function disconnectObs(){
-            await window.disconnectObs();
-        }
-        window.disconnectObs();
-        connected == false;
-        WsSubscribers.send("obs", "disconnected", connected);
-    });
-
     WsSubscribers.subscribe("tournament", "abbrv", (e) => {
             $(".rlis-overlay-container .rlis-overlay-tourney-area .rlis-overlay-tourney-top .rlis-overlay-tourney-info-area .rlis-overlay-tourney-text").text(e);
     });

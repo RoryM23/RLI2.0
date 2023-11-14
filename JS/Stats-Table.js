@@ -305,24 +305,6 @@ $(() => {
         gameNumber++;
     });
 
-    WsSubscribers.subscribe("obs", "connect", (e) => { // connect to obs websocket with info from control panel
-        async function connectToObs(){
-            await window.connectToObs();
-        }
-        window.connectToObs(e.ip, e.port, e.password);
-        connected == true;
-        WsSubscribers.send("obs", "connected", connected);
-    });
-
-    WsSubscribers.subscribe("obs", "disconnect", (e) => { // disconnect from obs
-        async function disconnectObs(){
-            await window.disconnectObs();
-        }
-        window.disconnectObs();
-        connected == false;
-        WsSubscribers.send("obs", "disconnected", connected);
-    });
-
     WsSubscribers.subscribe("tournament", "abbrv", (e) => {
             $(".stats-container .rlis-overlay-tourney-area .rlis-overlay-tourney-top .rlis-overlay-tourney-info-area .rlis-overlay-tourney-text").text(e);
     });
