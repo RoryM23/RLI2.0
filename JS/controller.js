@@ -285,6 +285,7 @@ $(() => {
     async function obsSceneChange() {
         await window.changeScene(scene);
     }
+    wait(900);
     obsSceneChange();
   });
 });
