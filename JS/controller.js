@@ -268,15 +268,17 @@ $(() => {
       }
   });
 
-  WsSubscribers.subscribe("game", "replay_start", (e) => {
+  WsSubscribers.subscribe("game", "goal_scored", (e) => {
+    wait(2000);
     async function obsSceneChange() {
         await window.changeScene('Replay');
     }
     obsSceneChange();
   });
 
-  WsSubscribers.subscribe("game", "replay_end", (e) => {
+  WsSubscribers.subscribe("game", "replay_will_end", (e) => {
     let scene = 'Gameplay';
+    console.log(timeLeft)
     if (timeLeft == 0){
       scene = 'Scoreboard'
     }
