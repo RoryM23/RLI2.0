@@ -256,13 +256,14 @@ $(() => {
   });
 
   WsSubscribers.subscribe("game", "podium_start", (e) => {
+      let scene = 'Scoreboard';
       async function getScene(){
         await window.getSceneInfo();
       }
       let currentScene = getScene();
-      if (!currentScene){
+      if (currentScene == scene){
         async function endOfGameSceneChange() {
-          await window.changeScene('Scoreboard');
+          await window.changeScene(scene);
       }
       endOfGameSceneChange();
       }
