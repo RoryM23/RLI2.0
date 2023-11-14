@@ -277,7 +277,7 @@ $(() => {
 
   WsSubscribers.subscribe("game", "replay_end", (e) => {
     let scene = 'Gameplay';
-    if (timer == 0){
+    if (timeLeft == 0){
       scene = 'Scoreboard'
     }
     async function obsSceneChange() {
