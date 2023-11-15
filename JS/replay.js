@@ -153,7 +153,6 @@ var orangeCount = 0;
 var assistBoolean = false;
 var replayBanner = document.getElementById("replayBanner");
 var assistArea = document.getElementById("assistArea");
-var connected = false;
 var timeLeft = 0;
 
 var blueName = document.getElementById('blueTeamName');

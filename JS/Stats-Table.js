@@ -154,7 +154,6 @@ var gameNumber = 1;
 var gameText = document.getElementById('gameText');
 var blueCount = 0;
 var orangeCount = 0;
-var connected = false;
 var timeLeft = 0;
 
 var blueName = document.getElementById('blueTeamName');

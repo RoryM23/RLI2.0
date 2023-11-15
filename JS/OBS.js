@@ -7,6 +7,7 @@ window.connectToObs = async function(ip, port, password) {
         document.getElementById("authText").innerHTML = ('Connected');
     } catch (error) {
         console.error('Failed to connect', error.code, error.message);
+        document.getElementById("authText").innerHTML = ('Failed to connect');
     }
 }
 
@@ -16,6 +17,7 @@ window.getSceneInfo = async function() {
         console.log(`Current Program Scene is : ${currentProgramSceneName}`);
     } catch (error) {
         console.error('Failed to get info', error.code, error.message);
+        document.getElementById("authText").innerHTML = ('Failed to get info');
     }
 }
 
@@ -26,6 +28,7 @@ window.changeScene = async function(newSceneName) {
         console.log(`Changed scene to : ${currentProgramSceneName}`);
     } catch (error) {
         console.error('Failed to get info', error.code, error.message);
+        document.getElementById("authText").innerHTML = ('Failed to get info');
     }
 }
 
@@ -36,5 +39,6 @@ window.disconnectObs = async function() {
         document.getElementById("authText").innerHTML = ('Disconnected');
     } catch (error) {
         console.error('Failed to disconnect', error.code, error.message);
+        document.getElementById("authText").innerHTML = ('Failed to disconnect');
     }
 }

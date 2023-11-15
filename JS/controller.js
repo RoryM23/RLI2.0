@@ -149,6 +149,7 @@ var blueCount = 0;
 var orangeCount = 0;
 var connectCounter = 0;
 var timeLeft = 0;
+var nextScene;
 
 var blueName = document.getElementById('blueTeamName');
 var blueScore = document.getElementById('blueScore');
@@ -172,30 +173,34 @@ WsSubscribers.init(49322, true)
 $(() => {
 	WsSubscribers.subscribe("game", "update_state", (d) => {
 	    var blueTeamName = d['game']['teams'][0]['name'];
-        	    var orangeTeamName = d['game']['teams'][1]['name'];
-        		blueScore.innerHTML = (d['game']['teams'][0]['score']);
-        		orangeScore.innerHTML = (d['game']['teams'][1]['score']);
-        		gameText.innerHTML = ("GAME " + gameNumber);
+        var orangeTeamName = d['game']['teams'][1]['name'];
+        blueScore.innerHTML = (d['game']['teams'][0]['score']);
+        orangeScore.innerHTML = (d['game']['teams'][1]['score']);
+        gameText.innerHTML = ("GAME " + gameNumber);
 
-                if(autoNames == true){
-                    blueName.innerHTML = (blueTeamName);
-                    orangeName.innerHTML = (orangeTeamName);
+        if(autoNames == true){
+            blueName.innerHTML = (blueTeamName);
+            orangeName.innerHTML = (orangeTeamName);
 
-                    blueImg.src = "Images/rli_logo.png";
-                    orangeImg.src = "Images/rli_logo.png";
-                }
+            blueImg.src = "Images/rli_logo.png";
+            orangeImg.src = "Images/rli_logo.png";
+        }
 
-        		timeLeft = parseInt(d['game']['time_seconds']);
-        		var m = Math.floor(timeLeft/60);
-        		var s = (timeLeft - (m*60));
-        		if(s.toString().length < 2){
-        		s = "0" + s;
-        		}
-        		var TimeLeft = m + ":" + s;
-        		if(d['game']['isOT'] == true){
-        		TimeLeft = "+ " + TimeLeft;
-        		}
-        		timer.innerHTML = (TimeLeft);
+        timeLeft = parseInt(d['game']['time_seconds']);
+        var m = Math.floor(timeLeft/60);
+        var s = (timeLeft - (m*60));
+        if(s.toString().length < 2){
+        s = "0" + s;
+        }
+        var TimeLeft = m + ":" + s;
+        if(d['game']['isOT'] == true){
+        TimeLeft = "+ " + TimeLeft;
+        nextScene = '';
+        }
+        timer.innerHTML = (TimeLeft);
+        if(TimeLeft == 0 && d['game']['hasWinner'] == false){
+            nextScene = 'Scoreboard';
+        }
 
 	});
 
@@ -236,59 +241,48 @@ $(() => {
                }
             }
             gameNumber++;
-  });
+    });
 
-  WsSubscribers.subscribe("obs", "disconnect", (e) => {
-      connectCounter -= 1;
-      document.getElementById("connectedNum").innerHTML = (connectCounter + '/4 Connected');
-  });
+     WsSubscribers.subscribe("game", "pre_countdown_begin", (e) => {
+        async function startOfGameSceneChange() {
+            await window.changeScene('Gameplay');
+        }
+        startOfGameSceneChange();
+    });
 
-  WsSubscribers.subscribe("obs", "connected", (e) => {
-      connectCounter += 1;
-      document.getElementById("connectedNum").innerHTML = (connectCounter + '/4 Connected');
-  });
-
-  WsSubscribers.subscribe("game", "pre_countdown_begin", (e) => {
-    async function startOfGameSceneChange() {
-        await window.changeScene('Gameplay');
-    }
-    startOfGameSceneChange();
-  });
-
-  WsSubscribers.subscribe("game", "podium_start", (e) => {
-      let scene = 'Scoreboard';
-      async function getScene(){
-        await window.getSceneInfo();
-      }
-      let currentScene = getScene();
-      if (currentScene == scene){
+    WsSubscribers.subscribe("game", "podium_start", (e) => {
+        let scene = 'Scoreboard';
+        async function getScene(){
+          await window.getSceneInfo();
+        }
+        let currentScene = getScene();
         async function endOfGameSceneChange() {
-          await window.changeScene(scene);
-      }
-      endOfGameSceneChange();
-      }
-  });
+          await window.changeScene('Scoreboard');
+        }
+        if(currentScene != nextScene){
+            endOfGameSceneChange();
+        }
+    });
 
-  WsSubscribers.subscribe("game", "goal_scored", (e) => {
-    wait(2000);
-    async function obsSceneChange() {
-        await window.changeScene('Replay');
-    }
-    obsSceneChange();
-  });
+    WsSubscribers.subscribe("game", "goal_scored", (e) => {
+        wait(2000).then(() => {
+            async function obsSceneChange() {
+                await window.changeScene('Replay');
+            }
+            obsSceneChange();
+        });
+    });
 
-  WsSubscribers.subscribe("game", "replay_will_end", (e) => {
-    let scene = 'Gameplay';
-    console.log(timeLeft)
-    if (timeLeft == 0){
-      scene = 'Scoreboard'
-    }
-    async function obsSceneChange() {
-        await window.changeScene(scene);
-    }
-    wait(900);
-    obsSceneChange();
-  });
+    WsSubscribers.subscribe("game", "replay_will_end", (e) => {
+        let scene = 'Gameplay';
+        if (timeLeft == 0){
+            scene = 'Scoreboard';
+        }
+        async function obsSceneChange() {
+            await window.changeScene(scene);
+        }
+        wait(1000).then(() => { obsSceneChange() });
+    });
 });
 
 $(".controller-container .controller-general-info .controller-tourney-abbrv-area .controller-button").click(function(){
@@ -662,3 +656,7 @@ $('#autoNames').click(function() {
       WsSubscribers.send("Scoreboard", "Names", autoNames);
     }
 });
+
+function wait(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
