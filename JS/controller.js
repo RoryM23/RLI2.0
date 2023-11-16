@@ -150,6 +150,8 @@ var orangeCount = 0;
 var connectCounter = 0;
 var timeLeft = 0;
 var nextScene;
+var bestOF = 9;
+var seriesTitle = "BO9";
 
 var blueName = document.getElementById('blueTeamName');
 var blueScore = document.getElementById('blueScore');
@@ -205,42 +207,42 @@ $(() => {
 	});
 
 	WsSubscribers.subscribe("game", "match_ended", (e) => {
-            if(e['winner_team_num'] == 0){
-                if(blueCount == 0){
-                  blue1.style.color = "#2ed8ff";
-                  blueCount = 1;
-                }else if(blueCount == 1){
-                  blue2.style.color = "#2ed8ff";
-                  blueCount = 2;
-                }else if(blueCount == 2){
-                  blue3.style.color = "#2ed8ff";
-                  blueCount = 3;
-                }else if(blueCount == 3){
-                  blue4.style.color = "#2ed8ff";
-                  blueCount = 4;
-                }else if(blueCount == 4){
-                  blue5.style.color = "#2ed8ff";
-                  blueCount = 5;
-                }
-            }else{
-                if(orangeCount == 0){
-                  Orange1.style.color = "#ffcd2e";
-                  orangeCount = 1;
-                }else if(orangeCount == 1){
-                  Orange2.style.color = "#ffcd2e";
-                  orangeCount = 2;
-                }else if(orangeCount == 2){
-                  Orange3.style.color = "#ffcd2e";
-                  orangeCount = 3;
-                }else if(orangeCount == 3){
-                  Orange4.style.color = "#ffcd2e";
-                  orangeCount = 4;
-                }else if(orangeCount == 4){
-                   Orange5.style.color = "#ffcd2e";
-                   orangeCount = 5;
-               }
+        if(e['winner_team_num'] == 0){
+            if(blueCount == 0){
+              blue1.style.color = "#2ed8ff";
+              blueCount = 1;
+            }else if(blueCount == 1){
+              blue2.style.color = "#2ed8ff";
+              blueCount = 2;
+            }else if(blueCount == 2){
+              blue3.style.color = "#2ed8ff";
+              blueCount = 3;
+            }else if(blueCount == 3){
+              blue4.style.color = "#2ed8ff";
+              blueCount = 4;
+            }else if(blueCount == 4){
+              blue5.style.color = "#2ed8ff";
+              blueCount = 5;
             }
-            gameNumber++;
+        }else{
+            if(orangeCount == 0){
+              Orange1.style.color = "#ffcd2e";
+              orangeCount = 1;
+            }else if(orangeCount == 1){
+              Orange2.style.color = "#ffcd2e";
+              orangeCount = 2;
+            }else if(orangeCount == 2){
+              Orange3.style.color = "#ffcd2e";
+              orangeCount = 3;
+            }else if(orangeCount == 3){
+              Orange4.style.color = "#ffcd2e";
+              orangeCount = 4;
+            }else if(orangeCount == 4){
+               Orange5.style.color = "#ffcd2e";
+               orangeCount = 5;
+           }
+        }
+        gameNumber++;
     });
 
      WsSubscribers.subscribe("game", "pre_countdown_begin", (e) => {
@@ -256,12 +258,68 @@ $(() => {
           await window.getSceneInfo();
         }
         let currentScene = getScene();
-        async function endOfGameSceneChange() {
-          await window.changeScene('Scoreboard');
+        console.log(blueCount)
+        console.log(orangeCount)
+        switch(bestOF){
+            case 1:
+                if(blueCount == 1 || orangeCount == 1){
+                    scene = 'Talking';
+                    resetSeries(seriesTitle);
+                    WsSubscribers.send("series", "none", seriesTitle);
+                }
+                else{
+                    scene = 'Scoreboard';
+                }
+                break;
+            case 3:
+                if(blueCount == 2 || orangeCount == 2){
+                    scene = 'Talking';
+                    resetSeries(seriesTitle);
+                    WsSubscribers.send("series", "bo3", seriesTitle);
+                }
+                else{
+                    scene = 'Scoreboard';
+                }
+                break;
+            case 5:
+                if(blueCount == 3 || orangeCount == 3){
+                    scene = 'Talking';
+                    resetSeries(seriesTitle);
+                    WsSubscribers.send("series", "bo5", seriesTitle);
+                }
+                else{
+                    scene = 'Scoreboard';
+                }
+                break;
+            case 7:
+                if(blueCount == 4 || orangeCount == 4){
+                    scene = 'Talking';
+                    resetSeries(seriesTitle);
+                    WsSubscribers.send("series", "bo7", seriesTitle);
+                }
+                else{
+                    scene = 'Scoreboard';
+                }
+                break;
+            case 9:
+                if(blueCount == 5 || orangeCount == 5){
+                    scene = 'Talking';
+                    resetSeries(seriesTitle);
+                    WsSubscribers.send("series", "bo9", seriesTitle);
+                }
+                else{
+                    scene = 'Scoreboard';
+                }
+                break;
         }
-        if(currentScene != nextScene){
-            endOfGameSceneChange();
-        }
+        wait(2000).then(() => {
+            async function endOfGameSceneChange() {
+              await window.changeScene(scene);
+            }
+            if(currentScene != nextScene){
+                endOfGameSceneChange();
+            }
+        });
     });
 
     WsSubscribers.subscribe("game", "goal_scored", (e) => {
@@ -281,7 +339,7 @@ $(() => {
         async function obsSceneChange() {
             await window.changeScene(scene);
         }
-        wait(1000).then(() => { obsSceneChange() });
+        wait(1100).then(() => { obsSceneChange() });
     });
 });
 
@@ -326,155 +384,39 @@ $("#disconnect").click(function(){
   document.getElementById("authText").innerHTML = ('Disconnected');
 });
 
-
 $(".controller-container .controller-general-info .controller-no-series-area .button").click(function(){
-        var i = "Show Match";
-        blueCount = 0;
-        orangeCount = 0;
-        blue1.style.visibility = "hidden";
-        blue2.style.visibility = "hidden";
-        blue3.style.visibility = "hidden";
-        blue4.style.visibility = "hidden";
-        blue5.style.visibility = "hidden";
-        Orange1.style.visibility = "hidden";
-        Orange2.style.visibility = "hidden";
-        Orange3.style.visibility = "hidden";
-        Orange4.style.visibility = "hidden";
-        Orange5.style.visibility = "hidden";
-        blue1.style.color = "#000";
-        blue2.style.color = "#000";
-        blue3.style.color = "#000";
-        blue4.style.color = "#000";
-        blue5.style.color = "#000";
-        Orange1.style.color = "#000";
-        Orange2.style.color = "#000";
-        Orange3.style.color = "#000";
-        Orange4.style.color = "#000";
-        Orange5.style.color = "#000";
-        WsSubscribers.send("series", "none", i);
-        gameNumber = 1;
-        gameText.innerHTML = ("GAME " + gameNumber);
-        $(".controller-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
+        seriesTitle = "Show Match";
+        bestOF = 1;
+        WsSubscribers.send("series", "none", seriesTitle);
+        resetSeries(seriesTitle);
 });
 
 $(".controller-container .controller-general-info .controller-no-series-area .button01").click(function(){
-        blueCount = 0;
-        orangeCount = 0;
-        var i = "BO3";
-        blue1.style.visibility = "visible";
-        blue2.style.visibility = "visible";
-        blue3.style.visibility = "hidden";
-        blue4.style.visibility = "hidden";
-        blue5.style.visibility = "hidden";
-        Orange1.style.visibility = "visible";
-        Orange2.style.visibility = "visible";
-        Orange3.style.visibility = "hidden";
-        Orange4.style.visibility = "hidden";
-        Orange5.style.visibility = "hidden";
-        blue1.style.color = "#000";
-        blue2.style.color = "#000";
-        blue3.style.color = "#000";
-        blue4.style.color = "#000";
-        blue5.style.color = "#000";
-        Orange1.style.color = "#000";
-        Orange2.style.color = "#000";
-        Orange3.style.color = "#000";
-        Orange4.style.color = "#000";
-        Orange5.style.color = "#000";
-        WsSubscribers.send("series", "bo3", i);
-        gameNumber = 1;
-        gameText.innerHTML = ("GAME " + gameNumber);
-        $(".controller-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
+        seriesTitle = "BO3";
+        bestOF = 3;
+        WsSubscribers.send("series", "bo3", seriesTitle);
+        resetSeries(seriesTitle);
 });
 
 $(".controller-container .controller-general-info .controller-no-series-area .button02").click(function(){
-        blueCount = 0;
-        orangeCount = 0;
-        var i = "BO5";
-        blue1.style.visibility = "visible";
-        blue2.style.visibility = "visible";
-        blue3.style.visibility = "visible";
-        blue4.style.visibility = "hidden";
-        blue5.style.visibility = "hidden";
-        Orange1.style.visibility = "visible";
-        Orange2.style.visibility = "visible";
-        Orange3.style.visibility = "visible";
-        Orange4.style.visibility = "hidden";
-        Orange5.style.visibility = "hidden";
-        blue1.style.color = "#000";
-        blue2.style.color = "#000";
-        blue3.style.color = "#000";
-        blue4.style.color = "#000";
-        blue5.style.color = "#000";
-        Orange1.style.color = "#000";
-        Orange2.style.color = "#000";
-        Orange3.style.color = "#000";
-        Orange4.style.color = "#000";
-        Orange5.style.color = "#000";
-        WsSubscribers.send("series", "bo5", i);
-        gameNumber = 1;
-        gameText.innerHTML = ("GAME " + gameNumber);
-        $(".controller-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
+        seriesTitle = "BO5";
+        bestOF = 5;
+        WsSubscribers.send("series", "bo5", seriesTitle);
+        resetSeries(seriesTitle);
 });
 
 $(".controller-container .controller-general-info .controller-no-series-area .button03").click(function(){
-        blueCount = 0;
-        orangeCount = 0;
-        var i = "BO7";
-        blue1.style.visibility = "visible";
-        blue2.style.visibility = "visible";
-        blue3.style.visibility = "visible";
-        blue4.style.visibility = "visible";
-        blue5.style.visibility = "hidden";
-        Orange1.style.visibility = "visible";
-        Orange2.style.visibility = "visible";
-        Orange3.style.visibility = "visible";
-        Orange4.style.visibility = "visible";
-        Orange5.style.visibility = "hidden";
-        blue1.style.color = "#000";
-        blue2.style.color = "#000";
-        blue3.style.color = "#000";
-        blue4.style.color = "#000";
-        blue5.style.color = "#000";
-        Orange1.style.color = "#000";
-        Orange2.style.color = "#000";
-        Orange3.style.color = "#000";
-        Orange4.style.color = "#000";
-        Orange5.style.color = "#000";
-        WsSubscribers.send("series", "bo7", i);
-        gameNumber = 1;
-        gameText.innerHTML = ("GAME " + gameNumber);
-        $(".controller-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
+        seriesTitle = "BO7";
+        bestOF = 7;
+        WsSubscribers.send("series", "bo7", seriesTitle);
+        resetSeries(seriesTitle);
 });
 
 $(".controller-container .controller-general-info .controller-no-series-area .button04").click(function(){
-        blueCount = 0;
-        orangeCount = 0;
-        var i = "BO9";
-        blue1.style.visibility = "visible";
-        blue2.style.visibility = "visible";
-        blue3.style.visibility = "visible";
-        blue4.style.visibility = "visible";
-        blue5.style.visibility = "visible";
-        Orange1.style.visibility = "visible";
-        Orange2.style.visibility = "visible";
-        Orange3.style.visibility = "visible";
-        Orange4.style.visibility = "visible";
-        Orange5.style.visibility = "visible";
-        blue1.style.color = "#000";
-        blue2.style.color = "#000";
-        blue3.style.color = "#000";
-        blue4.style.color = "#000";
-        blue5.style.color = "#000";
-        Orange1.style.color = "#000";
-        Orange2.style.color = "#000";
-        Orange3.style.color = "#000";
-        Orange4.style.color = "#000";
-        Orange5.style.color = "#000";
-        WsSubscribers.send("series", "bo9", i);
-        gameNumber = 1;
-        gameText.innerHTML = ("GAME " + gameNumber);
-        $(".controller-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(i);
+        seriesTitle = "BO9";
+        bestOF = 9;
+        WsSubscribers.send("series", "bo9", seriesTitle);
+        resetSeries(seriesTitle);
 });
 
 $(".controller-container .controller-overlay-body .controller-blue-controls .controller-container03 .controller-container05 .controller-button08").click(function(){
@@ -659,4 +601,72 @@ $('#autoNames').click(function() {
 
 function wait(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function resetSeries(seriesType){
+    let i = 1;
+    while(i<=5){
+        let currentBlueGame = document.getElementById("blueG" + i)
+        let currentOrangeGame = document.getElementById("orangeG" + i)
+        switch(bestOF){
+            case 1:
+                if(i>1){
+                    currentBlueGame.style.visibility = "hidden";
+                    currentOrangeGame.style.visibility = "hidden";
+                }
+                else{
+                    currentBlueGame.style.visibility = "visible";
+                    currentOrangeGame.style.visibility = "visible";
+                }
+                break;
+            case 3:
+                if(i>2){
+                    currentBlueGame.style.visibility = "hidden";
+                    currentOrangeGame.style.visibility = "hidden";
+                }
+                else{
+                    currentBlueGame.style.visibility = "visible";
+                    currentOrangeGame.style.visibility = "visible";
+                }
+                break;
+            case 5:
+                if(i>3){
+                    currentBlueGame.style.visibility = "hidden";
+                    currentOrangeGame.style.visibility = "hidden";
+                }
+                else{
+                    currentBlueGame.style.visibility = "visible";
+                    currentOrangeGame.style.visibility = "visible";
+                }
+                break;
+            case 7:
+                if(i>4){
+                    currentBlueGame.style.visibility = "hidden";
+                    currentOrangeGame.style.visibility = "hidden";
+                }
+                else{
+                    currentBlueGame.style.visibility = "visible";
+                    currentOrangeGame.style.visibility = "visible";
+                }
+                break;
+            case 9:
+                if(i>5){
+                    currentBlueGame.style.visibility = "hidden";
+                    currentOrangeGame.style.visibility = "hidden";
+                }
+                else{
+                    currentBlueGame.style.visibility = "visible";
+                    currentOrangeGame.style.visibility = "visible";
+                }
+                break;
+        }
+        currentBlueGame.style.color = "#000";
+        currentOrangeGame.style.color = "#000";
+        i++;
+    }
+    gameNumber = 1;
+    blueCount = 0;
+    orangeCount = 0;
+    gameText.innerHTML = ("GAME " + gameNumber);
+    $(".controller-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(seriesType);
 }
