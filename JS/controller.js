@@ -252,71 +252,6 @@ $(() => {
         startOfGameSceneChange();
     });
 
-    function checkIfSeriesEnded(){
-        switch(bestOF){
-            case 1:
-                if(blueCount == 1 || orangeCount == 1){
-                    scene = 'Talking';
-                    resetSeries(seriesTitle);
-                    WsSubscribers.send("series", "none", seriesTitle);
-                    return scene;
-                }
-                else{
-                    scene = 'Scoreboard';
-                    return scene;
-                }
-                break;
-            case 3:
-                if(blueCount == 2 || orangeCount == 2){
-                    scene = 'Talking';
-                    resetSeries(seriesTitle);
-                    WsSubscribers.send("series", "bo3", seriesTitle);
-                    return scene;
-                }
-                else{
-                    scene = 'Scoreboard';
-                    return scene;
-                }
-                break;
-            case 5:
-                if(blueCount == 3 || orangeCount == 3){
-                    scene = 'Talking';
-                    resetSeries(seriesTitle);
-                    WsSubscribers.send("series", "bo5", seriesTitle);
-                    return scene;
-                }
-                else{
-                    scene = 'Scoreboard';
-                    return scene;
-                }
-                break;
-            case 7:
-                if(blueCount == 4 || orangeCount == 4){
-                    scene = 'Talking';
-                    resetSeries(seriesTitle);
-                    WsSubscribers.send("series", "bo7", seriesTitle);
-                    return scene;
-                }
-                else{
-                    scene = 'Scoreboard';
-                    return scene;
-                }
-                break;
-            case 9:
-                if(blueCount == 5 || orangeCount == 5){
-                    scene = 'Talking';
-                    resetSeries(seriesTitle);
-                    WsSubscribers.send("series", "bo9", seriesTitle);
-                    return scene;
-                }
-                else{
-                    scene = 'Scoreboard';
-                    return scene;
-                }
-                break;
-        }
-    }
-
     WsSubscribers.subscribe("game", "podium_start", (e) => {
         let scene = 'Scoreboard';
         async function getScene(){
@@ -690,4 +625,69 @@ function resetSeries(seriesType){
     orangeCount = 0;
     gameText.innerHTML = ("GAME " + gameNumber);
     $(".controller-container .rlis-overlay-overlay-top .rlis-overlay-scoreboard .rlis-overlay-scoreboard-bottom .rlis-overlay-info-area .rlis-overlay-info-area-right .rlis-overlay-info-right-text").text(seriesType);
+}
+
+function checkIfSeriesEnded(){
+    switch(bestOF){
+        case 1:
+            if(blueCount == 1 || orangeCount == 1){
+                scene = 'Talking';
+                resetSeries(seriesTitle);
+                WsSubscribers.send("series", "none", seriesTitle);
+                return scene;
+            }
+            else{
+                scene = 'Scoreboard';
+                return scene;
+            }
+            break;
+        case 3:
+            if(blueCount == 2 || orangeCount == 2){
+                scene = 'Talking';
+                resetSeries(seriesTitle);
+                WsSubscribers.send("series", "bo3", seriesTitle);
+                return scene;
+            }
+            else{
+                scene = 'Scoreboard';
+                return scene;
+            }
+            break;
+        case 5:
+            if(blueCount == 3 || orangeCount == 3){
+                scene = 'Talking';
+                resetSeries(seriesTitle);
+                WsSubscribers.send("series", "bo5", seriesTitle);
+                return scene;
+            }
+            else{
+                scene = 'Scoreboard';
+                return scene;
+            }
+            break;
+        case 7:
+            if(blueCount == 4 || orangeCount == 4){
+                scene = 'Talking';
+                resetSeries(seriesTitle);
+                WsSubscribers.send("series", "bo7", seriesTitle);
+                return scene;
+            }
+            else{
+                scene = 'Scoreboard';
+                return scene;
+            }
+            break;
+        case 9:
+            if(blueCount == 5 || orangeCount == 5){
+                scene = 'Talking';
+                resetSeries(seriesTitle);
+                WsSubscribers.send("series", "bo9", seriesTitle);
+                return scene;
+            }
+            else{
+                scene = 'Scoreboard';
+                return scene;
+            }
+            break;
+    }
 }
