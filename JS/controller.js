@@ -351,7 +351,7 @@ $(() => {
         let scene = 'Gameplay';
         if (timeLeft == 0){
             let isEnded = checkIfSeriesEnded();
-            if (isEnded){
+            if (isEnded == 'Talking'){
                 scene = 'Talking';
             } else {
                 scene = 'Scoreboard';
