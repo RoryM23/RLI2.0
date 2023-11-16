@@ -259,11 +259,11 @@ $(() => {
                     scene = 'Talking';
                     resetSeries(seriesTitle);
                     WsSubscribers.send("series", "none", seriesTitle);
-                    return true;
+                    return scene;
                 }
                 else{
                     scene = 'Scoreboard';
-                    return false;
+                    return scene;
                 }
                 break;
             case 3:
@@ -271,11 +271,11 @@ $(() => {
                     scene = 'Talking';
                     resetSeries(seriesTitle);
                     WsSubscribers.send("series", "bo3", seriesTitle);
-                    return true;
+                    return scene;
                 }
                 else{
                     scene = 'Scoreboard';
-                    return false;
+                    return scene;
                 }
                 break;
             case 5:
@@ -283,11 +283,11 @@ $(() => {
                     scene = 'Talking';
                     resetSeries(seriesTitle);
                     WsSubscribers.send("series", "bo5", seriesTitle);
-                    return true;
+                    return scene;
                 }
                 else{
                     scene = 'Scoreboard';
-                    return false;
+                    return scene;
                 }
                 break;
             case 7:
@@ -295,11 +295,11 @@ $(() => {
                     scene = 'Talking';
                     resetSeries(seriesTitle);
                     WsSubscribers.send("series", "bo7", seriesTitle);
-                    return true;
+                    return scene;
                 }
                 else{
                     scene = 'Scoreboard';
-                    return false;
+                    return scene;
                 }
                 break;
             case 9:
@@ -307,11 +307,11 @@ $(() => {
                     scene = 'Talking';
                     resetSeries(seriesTitle);
                     WsSubscribers.send("series", "bo9", seriesTitle);
-                    return true;
+                    return scene;
                 }
                 else{
                     scene = 'Scoreboard';
-                    return false;
+                    return scene;
                 }
                 break;
         }
@@ -326,7 +326,7 @@ $(() => {
         console.log(blueCount)
         console.log(orangeCount)
 
-        let isEnded = checkIfSeriesEnded();
+        scene = checkIfSeriesEnded();
 
         wait(2000).then(() => {
             async function endOfGameSceneChange() {
