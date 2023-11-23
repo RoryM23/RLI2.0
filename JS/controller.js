@@ -260,17 +260,19 @@ $(() => {
         let currentScene = getScene();
         console.log(blueCount)
         console.log(orangeCount)
-
+        
         scene = checkIfSeriesEnded();
 
-        wait(2000).then(() => {
-            async function endOfGameSceneChange() {
-              await window.changeScene(scene);
-            }
-            if(currentScene != nextScene){
-                endOfGameSceneChange();
-            }
-        });
+        if (currentScene != scene){
+            wait(2000).then(() => {
+                async function endOfGameSceneChange() {
+                  await window.changeScene(scene);
+                }
+                if(currentScene != nextScene){
+                    endOfGameSceneChange();
+                }
+            });
+        }
     });
 
     WsSubscribers.subscribe("game", "goal_scored", (e) => {
