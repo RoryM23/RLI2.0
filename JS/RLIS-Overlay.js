@@ -252,6 +252,7 @@ $(() => {
 		        blueMembers += 1;
 		        if(d['game']['isReplay'] == false){
                     let blueSpectating = document.getElementById("bluePlayerName" + blueMembers);
+                    blueSpectating.style.background = inactiveBlue;
                     blueSpectating.style.visibility = 'visible';
                 }
 
@@ -287,7 +288,8 @@ $(() => {
 		            playerSpectatingBoostMeter.style.fill = "url(#blueGradient)";
                     if(d['game']['isReplay'] == false){
                          specInfo.style.visibility = 'visible';
-                     }
+                    }
+                    $('#playerSpectatingNameArea').textfill({ maxFontPixels: 25 });
                  }
 
 		        if(blueMembers == 1){
@@ -302,6 +304,7 @@ $(() => {
                 orangeMembers += 1;
                 if(d['game']['isReplay'] == false){
                     let orangeSpectating = document.getElementById("orangePlayerName" + orangeMembers);
+                    orangeSpectating.style.background = inactiveOrange;
                     orangeSpectating.style.visibility = 'visible';
                 }
 
@@ -338,6 +341,7 @@ $(() => {
                      if(d['game']['isReplay'] == false){
                          specInfo.style.visibility = 'visible';
                      }
+                     $('#playerSpectatingNameArea').textfill({ maxFontPixels: 25 });
                 }
 
                 if(orangeMembers == 1){
