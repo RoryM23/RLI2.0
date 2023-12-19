@@ -182,6 +182,8 @@ $(() => {
 		blueScore.innerHTML = (d['game']['teams'][0]['score']);
 		orangeScore.innerHTML = (d['game']['teams'][1]['score']);
 		gameText.innerHTML = ("GAME " + gameNumber);
+		$('#orangeTeamNameArea').textfill({ maxFontPixels: 25 });
+        $('#blueTeamNameArea').textfill({ maxFontPixels: 25 });
 
         if(autoNames == true){
             blueName.innerHTML = (blueTeamName);
