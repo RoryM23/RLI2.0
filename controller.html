@@ -3,6 +3,8 @@
 <head>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="JS/jquery.textfill.js"></script>
+  <script src="JS/import.js"></script>
+  <script src="https://apis.google.com/js/api.js"></script>
   <style>
   @import url('https://fonts.googleapis.com/css2?family=Quantico:ital,wght@1,700&display=swap');
   </style>
@@ -17,7 +19,7 @@
         <div class="rlis-overlay-left-spacer"></div>
         <div class="rlis-overlay-tourney-info-area">
           <span class="rlis-overlay-tourney-text">
-            <span>RLIS SEASON 9</span>
+            <span>RLI TOURNAMENT</span>
             <br />
           </span>
         </div>
@@ -117,14 +119,25 @@
       <div class="controller-auto-set-names-area">
         <h1 class="controller-auto-set-names-text">
           <span>Auto Set Names</span>
-          <br />
         </h1>
         <input
-                type="checkbox"
+                type="radio"
                 checked="true"
                 class="controller-chk-auto-set-names"
                 id="autoNames"
+                name="teamOptions"
         />
+        <br />
+        <h1 class="controller-auto-set-names-text">
+          <span>Use Google Sheet</span>
+        </h1>
+        <input
+                type="radio"
+                class="controller-chk-auto-set-names"
+                id="sheetNames"
+                name="teamOptions"
+        />
+        <br />
       </div>
       <div class="controller-tourney-abbrv-area">
         <h1 class="controller-tourney-abbrv-text">
@@ -182,42 +195,40 @@
         </button>
       </div>
       <div class="controller-auto-score-series-area">
-        <input
-                type="text"
-                placeholder="IP (IPv4 Address)"
-                class="controller-txt-tourney-stage input"
-                id="IP"
-        />
-        <input
-                type="text"
-                placeholder="PORT"
-                class="controller-txt-tourney-stage input"
-                id="port"
-        />
-        <input
-                type="text"
-                placeholder="PASSWORD"
-                class="controller-txt-tourney-stage input"
-                id="password"
-        />
+        <h1 class="controller-tourney-stage-text">
+          <span>Blue Series Score</span>
+          <br />
+        </h1>
+        <button class="button04" id="bluePlus">
+              <span class="controller-text46">
+                <span>+1 Game</span>
+                <br />
+              </span>
+        </button>
+        <button class="button04" id="blueMinus">
+              <span class="controller-text49">
+                <span>-1 Game</span>
+                <br />
+              </span>
+        </button>
       </div>
       <div class="controller-series-area">
-        <button class="button" id="connect">
-          <span class="controller-text18">
-            <span>Connect</span>
-            <br />
-          </span>
-        </button>
-        <button class="button" id="disconnect">
-          <span class="controller-text18">
-            <span>Disconnect</span>
-            <br />
-          </span>
-        </button>
-        <span class="controller-text24">
-          <span id="authText">Awaiting Auth....</span>
+        <h1 class="controller-tourney-stage-text">
+          <span>Orange Series Score</span>
           <br />
-        </span>
+        </h1>
+        <button class="button04" id="orangePlus">
+              <span class="controller-text55">
+                <span>+1 Game</span>
+                <br />
+              </span>
+        </button>
+        <button class="button04" id="orangeMinus">
+              <span class="controller-text58">
+                <span>-1 Game</span>
+                <br />
+              </span>
+        </button>
       </div>
       <div class="controller-right-spacer1">
       </div>
@@ -225,143 +236,100 @@
     <div class="controller-overlay-body">
       <div class="controller-blue-controls">
         <div class="controller-blue-team-names">
+
           <div class="controller-container01">
-            <h1 class="controller-text24">
-              <span>Blue Team Names</span>
-              <br />
-            </h1>
           </div>
           <div class="controller-container02">
-            <button class="controller-button02 button">
-              <span class="controller-text27">
-                <span>Giants</span>
-                <br />
-              </span>
-            </button>
-            <button class="controller-button03 button">
-              <span class="controller-text30">Wolfhounds</span>
-            </button>
-            <button class="controller-button04 button">
-              <span class="controller-text31">
-                <span>Banshees</span>
-                <br />
-              </span>
-            </button>
-            <button class="controller-button05 button">
-              <span class="controller-text34">
-                <span>High Kings</span>
-                <br />
-              </span>
-            </button>
-            <button class="controller-button06 button">
-              <span class="controller-text37">
-                <span>Setanta</span>
-                <br />
-              </span>
-            </button>
-            <button class="controller-button07 button">
-              <span class="controller-text40">
-                <span>Saints</span>
-                <br />
-              </span>
-            </button>
+
           </div>
         </div>
         <div class="controller-container03">
           <div class="controller-container04">
             <h1 class="controller-text43">
-              <span>Blue Series Score</span>
+              <span>Google Auth</span>
               <br />
             </h1>
           </div>
           <div class="controller-container05">
-            <button class="controller-button08 button">
-              <span class="controller-text46">
-                <span>+1 Game</span>
-                <br />
-              </span>
+            <input
+                    type="text"
+                    placeholder="API_KEY"
+                    class="controller-txt-tourney-stage input"
+                    id="API_KEY"
+            />
+            <input
+                    type="text"
+                    placeholder="CLIENT_ID"
+                    class="controller-txt-tourney-stage input"
+                    id="CLIENT_ID"
+            />
+            <button class="button" id="update" style="visibility:hidden;">
+          <span class="controller-text18">
+            <span>Update</span>
+            <br />
+          </span>
             </button>
-            <button class="controller-button09 button">
-              <span class="controller-text49">
-                <span>-1 Game</span>
-                <br />
-              </span>
-            </button>
+            <span class="controller-text24">
+          <span id="googleAuthText">Awaiting Auth....</span>
+          <br />
+        </span>
           </div>
         </div>
       </div>
       <div class="controller-orange-controls">
         <div class="controller-container06">
           <div class="controller-container07">
-            <h1 class="controller-text52">
-              <span>Orange Series Score</span>
-              <br />
+            <h1 class="controller-text43">
+            <span>OBS Auth</span>
+            <br />
             </h1>
           </div>
           <div class="controller-container08">
-            <button class="controller-button10 button">
-              <span class="controller-text55">
-                <span>+1 Game</span>
-                <br />
-              </span>
+            <input
+                    type="text"
+                    placeholder="IP (IPv4 Address)"
+                    class="controller-txt-tourney-stage input"
+                    id="IP"
+            />
+            <input
+                    type="text"
+                    placeholder="PORT"
+                    class="controller-txt-tourney-stage input"
+                    id="port"
+            />
+            <input
+                    type="text"
+                    placeholder="PASSWORD"
+                    class="controller-txt-tourney-stage input"
+                    id="password"
+            />
+            <button class="button" id="connect">
+          <span class="controller-text18">
+            <span>Connect</span>
+            <br />
+          </span>
             </button>
-            <button class="controller-button11 button">
-              <span class="controller-text58">
-                <span>-1 Game</span>
-                <br />
-              </span>
+            <button class="button" id="disconnect">
+          <span class="controller-text18">
+            <span>Disconnect</span>
+            <br />
+          </span>
             </button>
+            <span class="controller-text24">
+          <span id="authText">Awaiting Auth....</span>
+          <br />
+        </span>
           </div>
         </div>
         <div class="controller-container09">
-          <div class="controller-container10">
-            <h1 class="controller-text61">
-              <span>Orange Team Names</span>
-              <br />
-            </h1>
-          </div>
-          <div class="controller-container11">
-            <button class="controller-button12 button">
-              <span class="controller-text64">
-                <span>Giants</span>
-                <br />
-              </span>
-            </button>
-            <button class="controller-button13 button">
-              <span class="controller-text67">Wolfhounds</span>
-            </button>
-            <button class="controller-button14 button">
-              <span class="controller-text68">
-                <span>Banshees</span>
-                <br />
-              </span>
-            </button>
-            <button class="controller-button15 button">
-              <span class="controller-text71">
-                <span>High Kings</span>
-                <br />
-              </span>
-            </button>
-            <button class="controller-button16 button">
-              <span class="controller-text74">
-                <span>Setanta</span>
-                <br />
-              </span>
-            </button>
-            <button class="controller-button17 button">
-              <span class="controller-text77">
-                <span>Saints</span>
-                <br />
-              </span>
-            </button>
-          </div>
+
         </div>
       </div>
     </div>
   </div>
 </div>
 </body>
-<script src="JS/controller.js"></script>
+<script src="JS/controller.js" ></script>
 <script src="https://cdn.jsdelivr.net/npm/obs-websocket-js"></script>
 <script src="JS/OBS.js"></script>
 </html>

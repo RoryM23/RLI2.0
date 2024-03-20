@@ -303,6 +303,47 @@ $(() => {
     });
 });
 
+$('#update').click(function(){
+ CLIENT_ID = document.getElementById("CLIENT_ID").value.toString();
+ API_KEY = document.getElementById("API_KEY").value.toString();
+ $.getScript("https://apis.google.com/js/api.js").done(gapiLoaded());
+ try {
+   gapi.client.sheets.spreadsheets.values.batchGet({
+     spreadsheetId: '1rlAD9wBOE66gT25VCg5u355tOIzfxkJYT4Oc51X7Dho',
+     ranges: [
+       "games",
+       "teams"
+       ],
+     valueRenderOption: "FORMATTED_VALUE"
+   }).then((response) => {
+     document.getElementById('googleAuthText').innerHTML = ("Text Updated");
+     const result = response.result.valueRanges;
+     const numRows = result.values ? result.values.length : 0;
+     console.log(result);
+     WsSubscribers.send("Games", "Info", result);
+     // result[0]['values'] = the index for games sheet vales
+     //result[1]['values'] = the index for teams sheet vales
+     blueName.innerHTML = result[0]['values'][2][1].toUpperCase();
+     orangeName.innerHTML = result[0]['values'][2][3].toUpperCase();
+     $('#blueTeamNameArea').textfill({ maxFontPixels: 25, widthOnly: true });
+     $('#orangeTeamNameArea').textfill({ maxFontPixels: 25, widthOnly: true });
+
+     Object.keys(result[1]['values']).forEach((id) => {
+       if(result[1]['values'][id][0] == result[0]['values'][2][1]){
+           blueImg.src = result[1]['values'][id][1];
+       }else if(result[1]['values'][id][0] == result[0]['values'][2][3]){
+           orangeImg.src = result[1]['values'][id][1];
+       }
+     });
+   });
+ } catch (err) {
+       console.log(err.message);
+   return;
+ }
+});
+
+
+
 $(".controller-container .controller-general-info .controller-tourney-abbrv-area .controller-button").click(function(){
         var i = document.getElementById("tourneyAbbrv").value.toUpperCase();
         $(".controller-container .rlis-overlay-tourney-area .rlis-overlay-tourney-top .rlis-overlay-tourney-info-area .rlis-overlay-tourney-text").text(i);
@@ -379,7 +420,7 @@ $(".controller-container .controller-general-info .controller-no-series-area .bu
         resetSeries(seriesTitle);
 });
 
-$(".controller-container .controller-overlay-body .controller-blue-controls .controller-container03 .controller-container05 .controller-button08").click(function(){
+$("#bluePlus").click(function(){
     var i = 1
     if(blueCount == 0){
       blue1.style.color = "#2ed8ff";
@@ -401,7 +442,7 @@ $(".controller-container .controller-overlay-body .controller-blue-controls .con
     gameText.innerHTML = ("GAME " + gameNumber);
     WsSubscribers.send("series", "BluePlus", i);
 });
-$(".controller-container .controller-overlay-body .controller-blue-controls .controller-container03 .controller-container05 .controller-button09").click(function(){
+$("#blueMinus").click(function(){
     var i = 1
     if(blueCount == 5){
       blue5.style.color = "#000";
@@ -423,7 +464,7 @@ $(".controller-container .controller-overlay-body .controller-blue-controls .con
     gameText.innerHTML = ("GAME " + gameNumber);
     WsSubscribers.send("series", "BlueMinus", i);
 });
-$(".controller-container .controller-overlay-body .controller-orange-controls .controller-container06 .controller-container08 .controller-button10").click(function(){
+$("#orangePlus").click(function(){
     var i = 1
     if(orangeCount == 0){
       Orange1.style.color = "#ffcd2e";
@@ -445,7 +486,7 @@ $(".controller-container .controller-overlay-body .controller-orange-controls .c
    gameText.innerHTML = ("GAME " + gameNumber);
     WsSubscribers.send("series", "OrangePlus", i);
 });
-$(".controller-container .controller-overlay-body .controller-orange-controls .controller-container06 .controller-container08 .controller-button11").click(function(){
+$("#orangeMinus").click(function(){
     var i = 1
     if(orangeCount == 5){
       Orange5.style.color = "#000";
@@ -468,94 +509,31 @@ $(".controller-container .controller-overlay-body .controller-orange-controls .c
     WsSubscribers.send("series", "OrangeMinus", i);
 });
 
-$(".controller-container .controller-overlay-body .controller-blue-controls .controller-blue-team-names .controller-container02 .controller-button02").click(function(){
-    var i = 1;
-    blueName.innerHTML = "Giants";
-    blueImg.src = "Images/giants_no_text.png";
-    WsSubscribers.send("Team", "blueGiants", i);
-});
-$(".controller-container .controller-overlay-body .controller-blue-controls .controller-blue-team-names .controller-container02 .controller-button03").click(function(){
-    var i = 1;
-    blueName.innerHTML = "Wolfhounds";
-    blueImg.src = "Images/irish_wolfhounds_no_text.png";
-    WsSubscribers.send("Team", "blueWolf", i);
-});
-$(".controller-container .controller-overlay-body .controller-blue-controls .controller-blue-team-names .controller-container02 .controller-button04").click(function(){
-    var i = 1;
-    blueName.innerHTML = "Banshees";
-    blueImg.src = "Images/the_banshees_no_text.png";
-    WsSubscribers.send("Team", "blueBanshee", i);
-});
-$(".controller-container .controller-overlay-body .controller-blue-controls .controller-blue-team-names .controller-container02 .controller-button05").click(function(){
-    var i = 1;
-    blueName.innerHTML = "High Kings";
-    blueImg.src = "Images/the_high_kings_no_text.png";
-    WsSubscribers.send("Team", "blueKings", i);
-});
-$(".controller-container .controller-overlay-body .controller-blue-controls .controller-blue-team-names .controller-container02 .controller-button06").click(function(){
-    var i = 1;
-    blueName.innerHTML = "Setanta";
-    blueImg.src = "Images/setanta_no_text.png";
-    WsSubscribers.send("Team", "blueSetanta", i);
-});
-$(".controller-container .controller-overlay-body .controller-blue-controls .controller-blue-team-names .controller-container02 .controller-button07").click(function(){
-    var i = 1;
-    blueName.innerHTML = "The Saints";
-    blueImg.src = "Images/the_saints_no_text.png";
-    WsSubscribers.send("Team", "blueSaints", i);
-});
-
-$(".controller-container .controller-overlay-body .controller-orange-controls .controller-container09 .controller-container11 .controller-button12").click(function(){
-    var i = 1;
-    orangeName.innerHTML = "Giants";
-    orangeImg.src = "Images/giants_no_text.png";
-    WsSubscribers.send("Team", "orangeGiants", i);
-});
-$(".controller-container .controller-overlay-body .controller-orange-controls .controller-container09 .controller-container11 .controller-button13").click(function(){
-    var i = 1;
-    orangeName.innerHTML = "Wolfhounds";
-    orangeImg.src = "Images/irish_wolfhounds_no_text.png";
-    WsSubscribers.send("Team", "orangeWolf", i);
-});
-$(".controller-container .controller-overlay-body .controller-orange-controls .controller-container09 .controller-container11 .controller-button14").click(function(){
-    var i = 1;
-    orangeName.innerHTML = "Banshees";
-    orangeImg.src = "Images/the_banshees_no_text.png";
-    WsSubscribers.send("Team", "orangeBanshee", i);
-});
-$(".controller-container .controller-overlay-body .controller-orange-controls .controller-container09 .controller-container11 .controller-button15").click(function(){
-    var i = 1;
-    orangeName.innerHTML = "High Kings";
-    orangeImg.src = "Images/the_high_kings_no_text.png";
-    WsSubscribers.send("Team", "orangeKings", i);
-});
-$(".controller-container .controller-overlay-body .controller-orange-controls .controller-container09 .controller-container11 .controller-button16").click(function(){
-    var i = 1;
-    orangeName.innerHTML = "Setanta";
-    orangeImg.src = "Images/setanta_no_text.png";
-    WsSubscribers.send("Team", "orangeSetanta", i);
-});
-$(".controller-container .controller-overlay-body .controller-orange-controls .controller-container09 .controller-container11 .controller-button17").click(function(){
-    var i = 1;
-    orangeName.innerHTML = "The Saints";
-    orangeImg.src = "Images/the_saints_no_text.png";
-    WsSubscribers.send("Team", "orangeSaints", i);
-});
-
-$(".controller-container .controller-overlay-body .controller-orange-controls .controller-container09 .controller-container11 .controller-button17").click(function(){
-    var i = 1;
-    orangeName.innerHTML = "The Saints";
-    orangeImg.src = "Images/the_saints_no_text.png";
-    WsSubscribers.send("Team", "orangeSaints", i);
-});
-
 $('#autoNames').click(function() {
     if ($('#autoNames').prop('checked') == true) {
       autoNames = true;
+      document.getElementById('update').style.visibility = 'hidden';
       WsSubscribers.send("Scoreboard", "Names", autoNames);
     } else {
       autoNames = false;
+      document.getElementById('update').style.visibility = 'visible';
       WsSubscribers.send("Scoreboard", "Names", autoNames);
+    }
+});
+
+$('#sheetNames').click(function() {
+    if ($('#sheetNames').prop('checked') == true) {
+      autoNames = false;
+      document.getElementById('update').style.visibility = 'visible';
+      document.getElementById('API_KEY').style.visibility = 'visible';
+      document.getElementById('CLIENT_ID').style.visibility = 'visible';
+      document.getElementById('googleAuthText').style.visibility = 'visible';
+    } else {
+      autoNames = true;
+      document.getElementById('update').style.visibility = 'hidden';
+      document.getElementById('API_KEY').style.visibility = 'hidden';
+      document.getElementById('CLIENT_ID').style.visibility = 'hidden';
+      document.getElementById('googleAuthText').style.visibility = 'hidden';
     }
 });
 

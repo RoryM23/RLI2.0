@@ -570,58 +570,24 @@ $(() => {
         gameText.innerHTML = ("GAME " + gameNumber);
     });
 
-    WsSubscribers.subscribe("Team", "blueGiants", (e) => {
-        blueName.innerHTML = "GIANTS";
-        blueImg.src = "Images/giants_no_text.png";
-    });
-    WsSubscribers.subscribe("Team", "blueWolf", (e) => {
-        blueName.innerHTML = "WOLFHOUNDS";
-        blueImg.src = "Images/irish_wolfhounds_no_text.png";
-    });
-    WsSubscribers.subscribe("Team", "blueBanshee", (e) => {
-        blueName.innerHTML = "BANSHEES";
-        blueImg.src = "Images/the_banshees_no_text.png";
-    });
-    WsSubscribers.subscribe("Team", "blueKings", (e) => {
-        blueName.innerHTML = "HIGH KINGS";
-        blueImg.src = "Images/the_high_kings_no_text.png";
-    });
-    WsSubscribers.subscribe("Team", "blueSetanta", (e) => {
-        blueName.innerHTML = "SETANTA";
-        blueImg.src = "Images/setanta_no_text.png";
-    });
-    WsSubscribers.subscribe("Team", "blueSaints", (e) => {
-        blueName.innerHTML = "THE SAINTS";
-        blueImg.src = "Images/the_saints_no_text.png";
-    });
-
-    WsSubscribers.subscribe("Team", "orangeGiants", (e) => {
-        orangeName.innerHTML = "GIANTS";
-        orangeImg.src = "Images/giants_no_text.png";
-    });
-    WsSubscribers.subscribe("Team", "orangeWolf", (e) => {
-        orangeName.innerHTML = "WOLFHOUNDS";
-        orangeImg.src = "Images/irish_wolfhounds_no_text.png";
-    });
-    WsSubscribers.subscribe("Team", "orangeBanshee", (e) => {
-        orangeName.innerHTML = "BANSHEES";
-        orangeImg.src = "Images/the_banshees_no_text.png";
-    });
-    WsSubscribers.subscribe("Team", "orangeKings", (e) => {
-        orangeName.innerHTML = "HIGH KINGS";
-        orangeImg.src = "Images/the_high_kings_no_text.png";
-    });
-    WsSubscribers.subscribe("Team", "orangeSetanta", (e) => {
-        orangeName.innerHTML = "SETANTA";
-        orangeImg.src = "Images/setanta_no_text.png";
-    });
-    WsSubscribers.subscribe("Team", "orangeSaints", (e) => {
-        orangeName.innerHTML = "THE SAINTS";
-        orangeImg.src = "Images/the_saints_no_text.png";
-    });
-
     WsSubscribers.subscribe("Scoreboard", "Names", (e) => {
         autoNames = e;
+    });
+
+    WsSubscribers.subscribe("Games", "Info", (e) => {
+        autoNames = false;
+        blueName.innerHTML = e[0]['values'][2][1].toUpperCase();
+        orangeName.innerHTML = e[0]['values'][2][3].toUpperCase();
+        $('#blueTeamNameArea').textfill({ maxFontPixels: 25, widthOnly: true });
+        $('#orangeTeamNameArea').textfill({ maxFontPixels: 25, widthOnly: true });
+
+        Object.keys(e[1]['values']).forEach((id) => {
+          if(e[1]['values'][id][0] == e[0]['values'][2][1]){
+              blueImg.src = e[1]['values'][id][1];
+          }else if(e[1]['values'][id][0] == e[0]['values'][2][3]){
+              orangeImg.src = e[1]['values'][id][1];
+          }
+         });
     });
 
 });
