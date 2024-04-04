@@ -2,19 +2,19 @@
   
 # <img src="Images/rli_logo.png" align="center" height="48" width="48"> **RLI Overlay 2.0 Links** <img src="Images/rli_logo.png" align="center" height="48" width="48">
 
-## [**RLI Overlay:**](https://rm-118425146.github.io/RLIS2.0/overlay.html)
+## [**RLI Overlay:**](https://RoryM23.github.io/RLI2.0/overlay.html)
 - set this as a browser source above gameplay
 
-## [**Replay Overlay:**](https://rm-118425146.github.io/RLIS2.0/replay.html)
+## [**Replay Overlay:**](https://RoryM23.github.io/RLI2.0/replay.html)
 - Set this as a browser source in a new scene and switch to it as needed
 
-## [**Overlay Control:**](https://rm-118425146.github.io/RLIS2.0/controller.html)
+## [**Overlay Control:**](https://RoryM23.github.io/RLI2.0/controller.html)
 - Set this as a browser source below gameplay and click interact
 
-## [**Overlay Scoreboard:**](https://rm-118425146.github.io/RLIS2.0/Stats-Table.html)
+## [**Overlay Scoreboard:**](https://RoryM23.github.io/RLI2.0/Stats-Table.html)
 - Set this as a browser source in a new scene and switch to it as needed
 
-## [**Caster Border:**](https://rm-118425146.github.io/RLIS2.0/casters.html)
+## [**Caster Border:**](https://RoryM23.github.io/RLI2.0/casters.html)
 - set this as a browser source in the scene you would like to use between series where casters are speaking
 - The fixtures shown on this display are set on a google sheet
 
