@@ -152,10 +152,23 @@ const WsSubscribers = {
 $(() => {
 	WsSubscribers.init(49322, true)
     WsSubscribers.subscribe("Games", "Info", (e) => {
-        headlineText.innerHTML = e[0]['values'][15][1].toUpperCase();
-        scrollText.innerHTML = e[0]['values'][16][1].toUpperCase();
+        headlineText.innerHTML = e[0]['values'][16][1].toUpperCase();
+        scrollText.innerHTML = " " + e[0]['values'][17][1].toUpperCase() + "        ";
+        scrollText1.innerHTML = " " + e[0]['values'][18][1].toUpperCase() + "       ";
+        scrollText2.innerHTML = " " + e[0]['values'][19][1].toUpperCase() + "       ";
+        scrollText3.innerHTML = " " + e[0]['values'][20][1].toUpperCase() + "       ";
+        currentBo.innerHTML = e[0]['values'][3][4].toUpperCase();
+        firstBo.innerHTML = e[0]['values'][7][4].toUpperCase();
+        secondBo.innerHTML = e[0]['values'][10][4].toUpperCase();
+        thirdBo.innerHTML = e[0]['values'][13][4].toUpperCase();
+        firstSeries.innerHTML = e[0]['values'][7][0].toUpperCase();
+        secondSeries.innerHTML = e[0]['values'][10][0].toUpperCase();
+        thirdSeries.innerHTML = e[0]['values'][13][0].toUpperCase();
         $('#headlineText').textfill({ maxFontPixels: 25, widthOnly: true });
         $('#scrollText').textfill({ maxFontPixels: 25, widthOnly: true });
+        $('#scrollText1').textfill({ maxFontPixels: 25, widthOnly: true });
+        $('#scrollText2').textfill({ maxFontPixels: 25, widthOnly: true });
+        $('#scrollText3').textfill({ maxFontPixels: 25, widthOnly: true });
 
         Object.keys(e[1]['values']).forEach((id) => {
           if(e[1]['values'][id][0] == e[0]['values'][2][1]){
@@ -164,22 +177,22 @@ $(() => {
           if(e[1]['values'][id][0] == e[0]['values'][2][3]){
               currentOrange.src = e[1]['values'][id][1];
           }
-          if(e[1]['values'][id][0] == e[0]['values'][5][1]){
+          if(e[1]['values'][id][0] == e[0]['values'][6][1]){
               nextBlue.src = e[1]['values'][id][1];
           }
-          if(e[1]['values'][id][0] == e[0]['values'][5][3]){
+          if(e[1]['values'][id][0] == e[0]['values'][6][3]){
               nextOrange.src = e[1]['values'][id][1];
           }
-          if(e[1]['values'][id][0] == e[0]['values'][8][1]){
+          if(e[1]['values'][id][0] == e[0]['values'][9][1]){
               nextBlue2.src = e[1]['values'][id][1];
           }
-          if(e[1]['values'][id][0] == e[0]['values'][8][3]){
+          if(e[1]['values'][id][0] == e[0]['values'][9][3]){
               nextOrange2.src = e[1]['values'][id][1];
           }
-          if(e[1]['values'][id][0] == e[0]['values'][11][1]){
+          if(e[1]['values'][id][0] == e[0]['values'][12][1]){
               nextBlue3.src = e[1]['values'][id][1];
           }
-          if(e[1]['values'][id][0] == e[0]['values'][11][3]){
+          if(e[1]['values'][id][0] == e[0]['values'][12][3]){
               nextOrange3.src = e[1]['values'][id][1];
           }
          });
@@ -188,6 +201,11 @@ $(() => {
 
 var intervalId = window.setInterval(function(){
   var oldDate = new Date();
-  var newDate = oldDate.getHours() + ":" + oldDate.getMinutes();
+  var temp;
+  if (oldDate.getMinutes() < 10){
+    var newDate = oldDate.getHours() + ":0" + oldDate.getMinutes();
+  }else{
+    var newDate = oldDate.getHours() + ":" + oldDate.getMinutes();
+  }
   time.innerHTML = newDate;
 }, 500);
