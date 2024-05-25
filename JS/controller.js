@@ -627,6 +627,8 @@ function checkIfSeriesEnded(){
         case 1:
             if(blueCount == 1 || orangeCount == 1){
                 scene = 'Talking';
+                //updateSheet();
+                callUpdate();
                 resetSeries(seriesTitle);
                 WsSubscribers.send("series", "none", seriesTitle);
                 return scene;
@@ -639,6 +641,8 @@ function checkIfSeriesEnded(){
         case 3:
             if(blueCount == 2 || orangeCount == 2){
                 scene = 'Talking';
+                //updateSheet();
+                callUpdate();
                 resetSeries(seriesTitle);
                 WsSubscribers.send("series", "bo3", seriesTitle);
                 return scene;
@@ -651,6 +655,8 @@ function checkIfSeriesEnded(){
         case 5:
             if(blueCount == 3 || orangeCount == 3){
                 scene = 'Talking';
+                //updateSheet();
+                callUpdate();
                 resetSeries(seriesTitle);
                 WsSubscribers.send("series", "bo5", seriesTitle);
                 return scene;
@@ -663,6 +669,8 @@ function checkIfSeriesEnded(){
         case 7:
             if(blueCount == 4 || orangeCount == 4){
                 scene = 'Talking';
+                //updateSheet();
+                callUpdate();
                 resetSeries(seriesTitle);
                 WsSubscribers.send("series", "bo7", seriesTitle);
                 return scene;
@@ -675,6 +683,8 @@ function checkIfSeriesEnded(){
         case 9:
             if(blueCount == 5 || orangeCount == 5){
                 scene = 'Talking';
+                //updateSheet();
+                callUpdate();
                 resetSeries(seriesTitle);
                 WsSubscribers.send("series", "bo9", seriesTitle);
                 return scene;
@@ -708,7 +718,7 @@ var autoRun = window.setInterval(function(){
          const numRows = result.values ? result.values.length : 0;
          console.log(result);
          WsSubscribers.send("Games", "Info", result);
-         // result[0]['values'] = the index for games sheet vales
+         //result[0]['values'] = the index for games sheet vales
          //result[1]['values'] = the index for teams sheet vales
          blueName.innerHTML = result[0]['values'][2][1].toUpperCase();
          orangeName.innerHTML = result[0]['values'][2][3].toUpperCase();
@@ -730,3 +740,165 @@ var autoRun = window.setInterval(function(){
 
   }
 }, 30000);
+
+function updateSheet(){
+    if (autoUpdate == true){
+
+        CLIENT_ID = document.getElementById("CLIENT_ID").value.toString();
+        API_KEY = document.getElementById("API_KEY").value.toString();
+        $.getScript("https://apis.google.com/js/api.js").done(gapiLoaded());
+        try {
+            gapi.client.sheets.spreadsheets.values.batchGet({
+                spreadsheetId: '1rlAD9wBOE66gT25VCg5u355tOIzfxkJYT4Oc51X7Dho',
+                ranges: [
+                    "games",
+                    "teams"
+                ],
+                valueRenderOption: "FORMATTED_VALUE"
+            }).then((response) => {
+                document.getElementById('googleAuthText').innerHTML = ("Auto Update Enabled");
+                const result = response.result.valueRanges;
+                const numRows = result.values ? result.values.length : 0;
+                console.log(result);
+
+                authenticate();
+                gapi.client.sheets.spreadsheets.values.batchUpdate({
+                      "spreadsheetId": "1rlAD9wBOE66gT25VCg5u355tOIzfxkJYT4Oc51X7Dho",
+                      "resource": {
+                        "data": [
+                          {
+                            "range": "A3:E4",
+                            "values": [
+                              [
+                                null,
+                                result[0]['values'][6][1],
+                                null,
+                                result[0]['values'][6][3],
+                                null
+                              ],
+                              [
+                                null,
+                                result[0]['values'][7][1],
+                                null,
+                                result[0]['values'][7][3],
+                                null
+                                ]
+                            ],
+                            "majorDimension": "ROWS"
+                          },
+                          {
+                            "range": "A7:E8",
+                            "majorDimension": "ROWS",
+                            "values": [
+                              [
+                                null,
+                                result[0]['values'][9][1],
+                                null,
+                                result[0]['values'][9][3],
+                                null
+                              ],
+                              [
+                                null,
+                                result[0]['values'][10][1],
+                                null,
+                                result[0]['values'][10][3],
+                                null
+                              ]
+                            ]
+                          },
+                          {
+                            "range": "A10:E11",
+                            "majorDimension": "ROWS",
+                            "values": [
+                              [
+                                null,
+                                result[0]['values'][12][1],
+                                null,
+                                result[0]['values'][12][3],
+                                null
+                              ],
+                              [
+                                null,
+                                result[0]['values'][13][1],
+                                null,
+                                result[0]['values'][13][3],
+                                null
+                              ]
+                            ]
+                          },
+                          {
+                            "range": "A13:E14",
+                            "majorDimension": "ROWS",
+                            "values": [
+                              [
+                                null,
+                                result[0]['values'][2][1],
+                                null,
+                                result[0]['values'][2][3],
+                                null
+                              ],
+                              [
+                                null,
+                                blueCount,
+                                null,
+                                orangeCount,
+                                null
+                              ]
+                            ]
+                          }
+                        ],
+                        "valueInputOption": "RAW"
+                      }
+                    })
+                        .then(function(response) {
+                                // Handle the results here (response.result has the parsed body).
+                                console.log("Response", response);
+                              },
+                              function(err) { console.error("Execute error", err); });
+
+                    });
+        } catch (err) {
+            console.log(err.message);
+            return;
+        }
+    }
+}
+
+function callUpdate(){
+  CLIENT_ID = document.getElementById("CLIENT_ID").value.toString();
+  API_KEY = document.getElementById("API_KEY").value.toString();
+  $.getScript("https://apis.google.com/js/api.js").done(gapiLoaded());
+  try {
+    gapi.client.sheets.spreadsheets.values.batchGet({
+      spreadsheetId: '1rlAD9wBOE66gT25VCg5u355tOIzfxkJYT4Oc51X7Dho',
+      ranges: [
+        "games",
+        "teams"
+        ],
+      valueRenderOption: "FORMATTED_VALUE"
+    }).then((response) => {
+      document.getElementById('googleAuthText').innerHTML = ("Auto Update Enabled");
+      const result = response.result.valueRanges;
+      const numRows = result.values ? result.values.length : 0;
+      console.log(result);
+      WsSubscribers.send("Games", "Info", result);
+      //result[0]['values'] = the index for games sheet vales
+      //result[1]['values'] = the index for teams sheet vales
+      blueName.innerHTML = result[0]['values'][2][1].toUpperCase();
+      orangeName.innerHTML = result[0]['values'][2][3].toUpperCase();
+      $('#blueTeamNameArea').textfill({ maxFontPixels: 25, widthOnly: true });
+      $('#orangeTeamNameArea').textfill({ maxFontPixels: 25, widthOnly: true });
+
+      Object.keys(result[1]['values']).forEach((id) => {
+        if(result[1]['values'][id][0] == result[0]['values'][2][1]){
+            blueImg.src = result[1]['values'][id][1];
+        }else if(result[1]['values'][id][0] == result[0]['values'][2][3]){
+            orangeImg.src = result[1]['values'][id][1];
+        }
+      });
+    });
+  } catch (err) {
+        console.log(err.message);
+    return;
+  }
+}

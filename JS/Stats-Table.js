@@ -240,6 +240,7 @@ $(() => {
 
 
                     $(".stats-container .stats-container02 .stats-blue-player-area-" + blueMembers + " .stats-blue-name-area-" + blueMembers +" .stats-blue-name-text-" + blueMembers).text(d['players'][id].name);
+                    $(".stats-container .stats-container02 .stats-blue-player-area-" + blueMembers + " .stats-blue-name-area-" + blueMembers +" .stats-blue-name-text-" + blueMembers).textfill({ maxFontPixels: 30, widthOnly: true });
                     $(".stats-container .stats-container02 .stats-blue-player-area-" + blueMembers + " .stats-blue-score-area-" + blueMembers +" .stats-blue-score-text-" + blueMembers).text(d['players'][id].score);
                     $(".stats-container .stats-container02 .stats-blue-player-area-" + blueMembers + " .stats-blue-goals-area-" + blueMembers +" .stats-blue-goals-text-" + blueMembers).text(d['players'][id].goals);
                     $(".stats-container .stats-container02 .stats-blue-player-area-" + blueMembers + " .stats-blue-shots-area-" + blueMembers +" .stats-blue-shots-text-" + blueMembers).text(d['players'][id].shots);
@@ -254,6 +255,7 @@ $(() => {
                     currentOrangePlayer.style.visibility = 'visible';
 
                     $(".stats-container .stats-container02 .stats-orange-player-area-" + orangeMembers + " .stats-orange-name-area-" + orangeMembers +" .stats-orange-name-text-" + orangeMembers).text(d['players'][id].name);
+                    $(".stats-container .stats-container02 .stats-orange-player-area-" + orangeMembers + " .stats-orange-name-area-" + orangeMembers +" .stats-orange-name-text-" + orangeMembers).textfill({ maxFontPixels: 30, widthOnly: true });
                     $(".stats-container .stats-container02 .stats-orange-player-area-" + orangeMembers + " .stats-orange-score-area-" + orangeMembers +" .stats-orange-score-text-" + orangeMembers).text(d['players'][id].score);
                     $(".stats-container .stats-container02 .stats-orange-player-area-" + orangeMembers + " .stats-orange-goals-area-" + orangeMembers +" .stats-orange-goals-text-" + orangeMembers).text(d['players'][id].goals);
                     $(".stats-container .stats-container02 .stats-orange-player-area-" + orangeMembers + " .stats-orange-shots-area-" + orangeMembers +" .stats-orange-shots-text-" + orangeMembers).text(d['players'][id].shots);

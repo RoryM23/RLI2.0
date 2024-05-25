@@ -117,3 +117,14 @@ function gapiLoaded() {
         'Name, Major:\n');
     document.getElementById('content').innerText = output;
   }
+
+  function authenticate() {
+      $.getScript("https://apis.google.com/js/api.js").done(gapiLoaded())
+      wait(5000).then(() => {
+      return gapi.auth2.getAuthInstance()
+          .signIn({scope: "https://www.googleapis.com/auth/spreadsheets"})
+          .then(function() { console.log("Sign-in successful"); },
+                function(err) { console.error("Error signing in", err); });
+    });
+  }
+  document.onload = authenticate();

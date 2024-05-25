@@ -50,7 +50,7 @@
   width: 100%;
   height: 75px;
   display: flex;
-  align-items: center;
+  align-items: end;
   border-color: rgba(120, 120, 120, 0.4);
   border-style: hidden;
   border-width: 0px;
@@ -517,7 +517,18 @@
 .casters-container33 {
     flex: 0 0 auto;
     width: 100%;
-    height: 108.75px;
+    height: 75.5px;
+    display: flex;
+    align-items: center;
+    border-color: rgba(120, 120, 120, 0.4);
+    border-style: hidden;
+    border-width: 0px;
+    justify-content: center;
+}
+.casters-container34 {
+    flex: 0 0 auto;
+    width: 100%;
+    height: 36.25px;
     display: flex;
     align-items: center;
     border-color: rgba(120, 120, 120, 0.4);
@@ -539,5 +550,44 @@
     font-style: italic;
     font-family: 'Quantico';
     font-weight: 700;
+    padding-bottom: 5px;
+}
+.casters-text18 {
+    color: #ffffff;
+    font-size: 25px;
+    font-style: italic;
+    font-family: 'Quantico';
+    font-weight: 700;
     padding-bottom: 40px;
+}
+.casters-container35 {
+    flex: 0 0 auto;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    border-color: rgba(120, 120, 120, 0.4);
+    border-style: hidden;
+    border-width: 0px;
+    justify-content: center;
+}
+.casters-container36 {
+    flex: 0 0 auto;
+    width: 100%;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    border-color: rgba(120, 120, 120, 0.4);
+    border-style: hidden;
+    border-width: 0px;
+    justify-content: center;
+}
+.casters-text19 {
+    color: #ffffff;
+    font-size: 10px;
+    font-style: italic;
+    font-family: 'Quantico';
+    font-weight: 700;
+    padding-bottom: 40px;
+    text-align: center;
 }
