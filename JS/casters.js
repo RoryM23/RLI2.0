@@ -153,9 +153,9 @@ $(() => {
 	WsSubscribers.init(49322, true)
     WsSubscribers.subscribe("Games", "Info", (e) => {
         currentSeries.style.visibility = e[0]['values'][3][5];
-        nextSeries1.style.visibility = e[0]['values'][3][5];
-        nextSeries2.style.visibility = e[0]['values'][3][5];
-        nextSeries3.style.visibility = e[0]['values'][3][5];
+        nextSeries1.style.visibility = e[0]['values'][7][5];
+        nextSeries2.style.visibility = e[0]['values'][10][5];
+        nextSeries3.style.visibility = e[0]['values'][13][5];
         headlineText.innerHTML = e[0]['values'][16][1].toUpperCase();
         scrollText.innerHTML = " " + e[0]['values'][17][1].toUpperCase() + "        ";
         scrollText1.innerHTML = " " + e[0]['values'][18][1].toUpperCase() + "       ";
@@ -216,19 +216,19 @@ $(() => {
               currentOrange.src = e[1]['values'][id][1];
           }
           if(e[1]['values'][id][0] == e[0]['values'][6][1]){
-              nextBlue.src = e[7]['values'][id][1];
+              nextBlue.src = e[1]['values'][id][1];
           }
           if(e[1]['values'][id][0] == e[0]['values'][6][3]){
-              nextOrange.src = e[7]['values'][id][1];
+              nextOrange.src = e[1]['values'][id][1];
           }
           if(e[1]['values'][id][0] == e[0]['values'][9][1]){
-              nextBlue2.src = e[10]['values'][id][1];
+              nextBlue2.src = e[1]['values'][id][1];
           }
           if(e[1]['values'][id][0] == e[0]['values'][9][3]){
-              nextOrange2.src = e[10]['values'][id][1];
+              nextOrange2.src = e[1]['values'][id][1];
           }
           if(e[1]['values'][id][0] == e[0]['values'][12][1]){
-              nextBlue3.src = e[13]['values'][id][1];
+              nextBlue3.src = e[1]['values'][id][1];
           }
           if(e[1]['values'][id][0] == e[0]['values'][12][3]){
               nextOrange3.src = e[13]['values'][id][1];
