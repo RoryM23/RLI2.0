@@ -216,22 +216,22 @@ $(() => {
               currentOrange.src = e[1]['values'][id][1];
           }
           if(e[1]['values'][id][0] == e[0]['values'][6][1]){
-              nextBlue.src = e[1]['values'][id][1];
+              nextBlue.src = e[7]['values'][id][1];
           }
           if(e[1]['values'][id][0] == e[0]['values'][6][3]){
-              nextOrange.src = e[1]['values'][id][1];
+              nextOrange.src = e[7]['values'][id][1];
           }
           if(e[1]['values'][id][0] == e[0]['values'][9][1]){
-              nextBlue2.src = e[1]['values'][id][1];
+              nextBlue2.src = e[10]['values'][id][1];
           }
           if(e[1]['values'][id][0] == e[0]['values'][9][3]){
-              nextOrange2.src = e[1]['values'][id][1];
+              nextOrange2.src = e[10]['values'][id][1];
           }
           if(e[1]['values'][id][0] == e[0]['values'][12][1]){
-              nextBlue3.src = e[1]['values'][id][1];
+              nextBlue3.src = e[13]['values'][id][1];
           }
           if(e[1]['values'][id][0] == e[0]['values'][12][3]){
-              nextOrange3.src = e[1]['values'][id][1];
+              nextOrange3.src = e[13]['values'][id][1];
           }
          });
     });
