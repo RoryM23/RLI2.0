@@ -231,7 +231,7 @@ $(() => {
               nextBlue3.src = e[1]['values'][id][1];
           }
           if(e[1]['values'][id][0] == e[0]['values'][12][3]){
-              nextOrange3.src = e[13]['values'][id][1];
+              nextOrange3.src = e[1]['values'][id][1];
           }
          });
     });
