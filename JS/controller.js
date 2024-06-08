@@ -266,16 +266,34 @@ $(() => {
         
         scene = checkIfSeriesEnded();
 
+        console.log(seriesTitle);
         if (currentScene != scene){
             wait(2000).then(() => {
-                async function endOfGameSceneChange() {
-                  await window.changeScene(scene);
+            scene = 'Scoreboard';
+                if(currentScene != nextScene){
+                    endOfGameSceneChange();
                 }
+            });
+            wait(10000).then(() => {
+            scene = 'Talking';
+                if(currentScene != nextScene){
+                    callUpdate();
+                    endOfGameSceneChange();
+                }
+            });
+        }
+        else{
+            wait(2000).then(() => {
+            scene = 'Scoreboard';
                 if(currentScene != nextScene){
                     endOfGameSceneChange();
                 }
             });
         }
+        async function endOfGameSceneChange() {
+          await window.changeScene(scene);
+        }
+        console.log(seriesTitle);
     });
 
     WsSubscribers.subscribe("game", "goal_scored", (e) => {
@@ -290,17 +308,17 @@ $(() => {
     WsSubscribers.subscribe("game", "replay_will_end", (e) => {
         let scene = 'Gameplay';
         if (timeLeft == 0){
+            scene = 'Scoreboard';
+            wait(1100).then(() => { obsSceneChange() });
             let isEnded = checkIfSeriesEnded();
             if (isEnded == 'Talking'){
                 scene = 'Talking';
-            } else {
-                scene = 'Scoreboard';
+                wait(10000).then(() => { obsSceneChange() }).then(callUpdate());
             }
         }
         async function obsSceneChange() {
             await window.changeScene(scene);
         }
-        wait(1100).then(() => { obsSceneChange() });
     });
 });
 
@@ -740,129 +758,6 @@ var autoRun = window.setInterval(function(){
 
   }
 }, 30000);
-
-function updateSheet(){
-    if (autoUpdate == true){
-
-        CLIENT_ID = document.getElementById("CLIENT_ID").value.toString();
-        API_KEY = document.getElementById("API_KEY").value.toString();
-        $.getScript("https://apis.google.com/js/api.js").done(gapiLoaded());
-        try {
-            gapi.client.sheets.spreadsheets.values.batchGet({
-                spreadsheetId: '1rlAD9wBOE66gT25VCg5u355tOIzfxkJYT4Oc51X7Dho',
-                ranges: [
-                    "games",
-                    "teams"
-                ],
-                valueRenderOption: "FORMATTED_VALUE"
-            }).then((response) => {
-                document.getElementById('googleAuthText').innerHTML = ("Auto Update Enabled");
-                const result = response.result.valueRanges;
-                const numRows = result.values ? result.values.length : 0;
-                console.log(result);
-
-                authenticate();
-                gapi.client.sheets.spreadsheets.values.batchUpdate({
-                      "spreadsheetId": "1rlAD9wBOE66gT25VCg5u355tOIzfxkJYT4Oc51X7Dho",
-                      "resource": {
-                        "data": [
-                          {
-                            "range": "A3:E4",
-                            "values": [
-                              [
-                                null,
-                                result[0]['values'][6][1],
-                                null,
-                                result[0]['values'][6][3],
-                                null
-                              ],
-                              [
-                                null,
-                                result[0]['values'][7][1],
-                                null,
-                                result[0]['values'][7][3],
-                                null
-                                ]
-                            ],
-                            "majorDimension": "ROWS"
-                          },
-                          {
-                            "range": "A7:E8",
-                            "majorDimension": "ROWS",
-                            "values": [
-                              [
-                                null,
-                                result[0]['values'][9][1],
-                                null,
-                                result[0]['values'][9][3],
-                                null
-                              ],
-                              [
-                                null,
-                                result[0]['values'][10][1],
-                                null,
-                                result[0]['values'][10][3],
-                                null
-                              ]
-                            ]
-                          },
-                          {
-                            "range": "A10:E11",
-                            "majorDimension": "ROWS",
-                            "values": [
-                              [
-                                null,
-                                result[0]['values'][12][1],
-                                null,
-                                result[0]['values'][12][3],
-                                null
-                              ],
-                              [
-                                null,
-                                result[0]['values'][13][1],
-                                null,
-                                result[0]['values'][13][3],
-                                null
-                              ]
-                            ]
-                          },
-                          {
-                            "range": "A13:E14",
-                            "majorDimension": "ROWS",
-                            "values": [
-                              [
-                                null,
-                                result[0]['values'][2][1],
-                                null,
-                                result[0]['values'][2][3],
-                                null
-                              ],
-                              [
-                                null,
-                                blueCount,
-                                null,
-                                orangeCount,
-                                null
-                              ]
-                            ]
-                          }
-                        ],
-                        "valueInputOption": "RAW"
-                      }
-                    })
-                        .then(function(response) {
-                                // Handle the results here (response.result has the parsed body).
-                                console.log("Response", response);
-                              },
-                              function(err) { console.error("Execute error", err); });
-
-                    });
-        } catch (err) {
-            console.log(err.message);
-            return;
-        }
-    }
-}
 
 function callUpdate(){
   CLIENT_ID = document.getElementById("CLIENT_ID").value.toString();
