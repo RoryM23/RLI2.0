@@ -153,6 +153,8 @@ var nextScene;
 var bestOF = 9;
 var seriesTitle = "BO9";
 var autoUpdate = false;
+var currentBlueScore = 0;
+var currentOrangeScore = 0;
 
 var blueName = document.getElementById('blueTeamName');
 var blueScore = document.getElementById('blueScore');
@@ -178,6 +180,8 @@ $(() => {
 	    var blueTeamName = d['game']['teams'][0]['name'];
         var orangeTeamName = d['game']['teams'][1]['name'];
         blueScore.innerHTML = (d['game']['teams'][0]['score']);
+        currentBlueScore = d['game']['teams'][0]['score'];
+        currentOrangeScore = d['game']['teams'][1]['score'];
         orangeScore.innerHTML = (d['game']['teams'][1]['score']);
         gameText.innerHTML = ("GAME " + gameNumber);
         $('#orangeTeamNameArea').textfill({ maxFontPixels: 25 });
@@ -200,7 +204,6 @@ $(() => {
         var TimeLeft = m + ":" + s;
         if(d['game']['isOT'] == true){
         TimeLeft = "+ " + TimeLeft;
-        nextScene = '';
         }
         timer.innerHTML = (TimeLeft);
         if(TimeLeft == 0 && d['game']['hasWinner'] == false){
@@ -260,13 +263,15 @@ $(() => {
         async function getScene(){
           await window.getSceneInfo();
         }
+        // should be gameplay scene at this point
         let currentScene = getScene();
         console.log(blueCount)
         console.log(orangeCount)
-        
+
+        let = isEndedScene = checkIfSeriesEnded();
         scene = checkIfSeriesEnded();
 
-        console.log(seriesTitle);
+        console.log(currentScene);
         if (currentScene != scene){
             wait(2000).then(() => {
             scene = 'Scoreboard';
@@ -276,7 +281,7 @@ $(() => {
             });
             wait(10000).then(() => {
             scene = 'Talking';
-                if(currentScene != nextScene){
+                if(scene == isEndedScene){
                     callUpdate();
                     endOfGameSceneChange();
                 }
@@ -307,7 +312,8 @@ $(() => {
 
     WsSubscribers.subscribe("game", "replay_will_end", (e) => {
         let scene = 'Gameplay';
-        if (timeLeft == 0){
+        console.log(e);
+        if (timeLeft == 0 && (currentBlueScore != currentOrangeScore)){
             scene = 'Scoreboard';
             wait(1100).then(() => { obsSceneChange() });
             let isEnded = checkIfSeriesEnded();
@@ -315,6 +321,8 @@ $(() => {
                 scene = 'Talking';
                 wait(10000).then(() => { obsSceneChange() }).then(callUpdate());
             }
+        }else{
+         wait(1100).then(() => { obsSceneChange() });
         }
         async function obsSceneChange() {
             await window.changeScene(scene);
