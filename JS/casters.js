@@ -194,6 +194,15 @@ $(() => {
         }else{
             thirdScoreArea.style.visibility = "hidden";
         }
+        if(e[0]['values'][7][5] == "hidden"){
+            firstScoreArea.style.visibility = "hidden";
+        }
+        if(e[0]['values'][10][5] == "hidden"){
+            secondScoreArea.style.visibility = "hidden";
+        }
+        if(e[0]['values'][13][5] == "hidden"){
+            thirdScoreArea.style.visibility = "hidden";
+        }
         $('#headlineText').textfill({ maxFontPixels: 25, widthOnly: true });
         $('#scrollText').textfill({ maxFontPixels: 25, widthOnly: true });
         $('#scrollText1').textfill({ maxFontPixels: 25, widthOnly: true });
